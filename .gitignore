@@ -27,3 +27,4 @@ replay_pid*
 /target/classes/
 /.idea/*
 !/.idea/runConfigurations/
+!/.idea/saveactions_settings.xml
