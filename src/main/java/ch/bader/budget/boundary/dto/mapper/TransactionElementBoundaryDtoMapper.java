@@ -5,7 +5,7 @@ import ch.bader.budget.domain.TransactionListElement;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "jakarta-cdi")
 public interface TransactionElementBoundaryDtoMapper {
 
     @Mapping(target = "amount", source = "effectiveAmount")

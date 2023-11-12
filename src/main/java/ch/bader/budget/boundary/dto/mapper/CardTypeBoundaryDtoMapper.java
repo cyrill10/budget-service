@@ -3,7 +3,7 @@ package ch.bader.budget.boundary.dto.mapper;
 import ch.bader.budget.type.CardType;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "jakarta-cdi")
 public interface CardTypeBoundaryDtoMapper {
 
     default String mapToString(CardType domain) {

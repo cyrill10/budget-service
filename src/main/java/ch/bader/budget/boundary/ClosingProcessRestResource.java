@@ -8,6 +8,9 @@ import ch.bader.budget.boundary.dto.TransferDetailBoundaryDto;
 import ch.bader.budget.boundary.dto.mapper.ClosingProcessBoundaryDtoMapper;
 import ch.bader.budget.boundary.dto.mapper.ScannedTransactionBoundaryDtoMapper;
 import ch.bader.budget.boundary.dto.mapper.TransferDetailBoundaryDtoMapper;
+import ch.bader.budget.core.service.ClosingProcessService;
+import ch.bader.budget.domain.ClosingProcess;
+import ch.bader.budget.domain.ScannedTransaction;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -17,46 +20,62 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.jboss.resteasy.reactive.RestForm;
 import org.jboss.resteasy.reactive.RestQuery;
+import org.jboss.resteasy.reactive.RestResponse;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
+import java.time.YearMonth;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/budget/closingProcess")
 @Produces(MediaType.APPLICATION_JSON)
 public class ClosingProcessRestResource {
 
     @Inject
-    final ClosingProcessService closingProcessService;
+    ClosingProcessService closingProcessService;
 
     @Inject
-    final ClosingProcessBoundaryDtoMapper closingProcessBoundaryDtoMapper;
+    ClosingProcessBoundaryDtoMapper closingProcessBoundaryDtoMapper;
 
     @Inject
-    final ScannedTransactionBoundaryDtoMapper scannedTransactionBoundaryDtoMapper;
+    ScannedTransactionBoundaryDtoMapper scannedTransactionBoundaryDtoMapper;
 
     @Inject
-    final TransferDetailBoundaryDtoMapper transferDetailBoundaryDtoMapper;
+    TransferDetailBoundaryDtoMapper transferDetailBoundaryDtoMapper;
 
 
     @GET
     public ClosingProcessBoundaryDto getClosingProcess(@RestQuery Integer year, @RestQuery Integer month) {
-        return ClosingProcessBoundaryDto.builder().build();
+        YearMonth yearMonth = YearMonth.of(year, month + 1);
+        ClosingProcess closingProcess = closingProcessService.getClosingProcess(yearMonth);
+        return closingProcessBoundaryDtoMapper.mapToDto(closingProcess);
+
     }
 
     @POST
     @Path("closeFileUpload")
     public ClosingProcessBoundaryDto closeFileUpload(@RestQuery Integer year, @RestQuery Integer month) {
-        return ClosingProcessBoundaryDto.builder().build();
+        YearMonth yearMonth = YearMonth.of(year, month + 1);
+        ClosingProcess closingProcess = closingProcessService.closeFileUpload(yearMonth);
+        return closingProcessBoundaryDtoMapper.mapToDto(closingProcess);
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public List<ScannedTransactionBoundaryDto> uploadFile(
+    public RestResponse<List<ScannedTransactionBoundaryDto>> uploadFile(
         @RestQuery Integer year,
         @RestQuery Integer month,
         @RestForm FileUpload file) {
-        return List.of(ScannedTransactionBoundaryDto.builder().build());
-
+        YearMonth yearMonth = YearMonth.of(year, month + 1);
+        List<ScannedTransaction> scannedTransactions = closingProcessService.uploadFile(yearMonth, file);
+        if (scannedTransactions != null) {
+            return RestResponse.ok(scannedTransactions
+                .stream()
+                .map(scannedTransactionBoundaryDtoMapper::mapToDto)
+                .collect(
+                    Collectors.toList()));
+        }
+        return RestResponse.status(RestResponse.Status.EXPECTATION_FAILED);
     }
 
     @GET
@@ -64,24 +83,37 @@ public class ClosingProcessRestResource {
     public List<ScannedTransactionBoundaryDto> getTransactions(
         @RestQuery Integer year,
         @RestQuery Integer month) {
-        return List.of(ScannedTransactionBoundaryDto.builder().build());
+        YearMonth yearMonth = YearMonth.of(year, month + 1);
+        return closingProcessService
+            .getTransactions(yearMonth)
+            .stream()
+            .map(scannedTransactionBoundaryDtoMapper::mapToDto)
+            .collect(Collectors.toList());
     }
 
     @POST
     @Path("/transactions")
     public void saveScannedTransactions(SaveScannedTransactionBoundaryDto dto) {
+        closingProcessService.saveScannedTransactions(dto);
     }
 
     @GET
     @Path("/transfer/details")
     public List<TransferDetailBoundaryDto> getTransferDetails(@RestQuery Integer year,
                                                               @RestQuery Integer month) {
-        return List.of(TransferDetailBoundaryDto.builder().build());
+        YearMonth yearMonth = YearMonth.of(year, month + 1);
+        return closingProcessService
+            .getTransferDetails(yearMonth)
+            .stream()
+            .map(transferDetailBoundaryDtoMapper::mapToDto).collect(Collectors.toList());
+
     }
 
     @POST
     @Path("/transfer/close")
     public ClosingProcessBoundaryDto closeTransfer(@RestQuery Integer year, @RestQuery Integer month) {
-        return ClosingProcessBoundaryDto.builder().build();
+        YearMonth yearMonth = YearMonth.of(year, month + 1);
+        ClosingProcess closingProcess = closingProcessService.closeTransfer(yearMonth);
+        return closingProcessBoundaryDtoMapper.mapToDto(closingProcess);
     }
 }
