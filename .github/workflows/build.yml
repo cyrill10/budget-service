@@ -1,0 +1,23 @@
+name: Build Maven Project
+
+on:
+  push:
+    branches:
+      - '*'  # Run on pushes to any branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '18'
+
+    - name: Build with Maven
+      run: mvn clean install -DskipITs=false
