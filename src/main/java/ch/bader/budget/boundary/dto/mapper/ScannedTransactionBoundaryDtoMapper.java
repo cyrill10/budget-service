@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.time.YearMonth;
 
-@Mapper(componentModel = "jakarta-cdi", uses = {CardTypeBoundaryDtoMapper.class, ClosingProcessBoundaryDtoMapper.class}, imports = YearMonth.class)
+@Mapper(uses = {CardTypeBoundaryDtoMapper.class, ClosingProcessBoundaryDtoMapper.class}, imports = YearMonth.class)
 public interface ScannedTransactionBoundaryDtoMapper {
 
     ScannedTransactionBoundaryDto mapToDto(ScannedTransaction domain);

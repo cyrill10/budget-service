@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 
 import java.time.YearMonth;
 
-@Mapper(componentModel = "jakarta-cdi", uses = ClosingProcessStatusBoundaryDtoMapper.class, imports = YearMonth.class)
+@Mapper(uses = ClosingProcessStatusBoundaryDtoMapper.class, imports = YearMonth.class)
 public interface ClosingProcessBoundaryDtoMapper {
 
     @Mapping(target = "year", expression = "java(domain.getYearMonth().getYear())")
