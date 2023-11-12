@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-class RealAccountMapperTest {
+class RealAccountBoundaryDtoMapperTest {
 
     @Inject
     RealAccountBoundaryDtoMapperImpl sut;
@@ -20,14 +20,14 @@ class RealAccountMapperTest {
     @Test
     void shouldMapRealAccountToDto() {
         //given
-        RealAccount domain = RealAccount.builder()
-                                        .id("id")
-                                        .name("realAccountName")
-                                        .accountType(AccountType.CHECKING)
-                                        .build();
+        final RealAccount domain = RealAccount.builder()
+                                              .id("id")
+                                              .name("realAccountName")
+                                              .accountType(AccountType.CHECKING)
+                                              .build();
 
         //when
-        RealAccountBoundaryDto account = sut.mapToDto(domain);
+        final RealAccountBoundaryDto account = sut.mapToDto(domain);
 
         //then
         assertNotNull(account);
@@ -40,17 +40,17 @@ class RealAccountMapperTest {
     @Test
     void shouldMapDtoToRealAccount() {
         //given
-        RealAccountBoundaryDto dto = RealAccountBoundaryDto.builder()
-                                                           .id("id")
-                                                           .name("realAccountName")
-                                                           .accountType(ValueEnumBoundaryDto.builder()
+        final RealAccountBoundaryDto dto = RealAccountBoundaryDto.builder()
+                                                                 .id("id")
+                                                                 .name("realAccountName")
+                                                                 .accountType(ValueEnumBoundaryDto.builder()
                                                                                             .value(AccountType.CHECKING.getValue())
                                                                                             .name(AccountType.CHECKING.getName())
                                                                                             .build())
-                                                           .build();
+                                                                 .build();
 
         //when
-        RealAccount account = sut.mapToDomain(dto);
+        final RealAccount account = sut.mapToDomain(dto);
 
         //then
         assertNotNull(account);

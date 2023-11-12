@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-class ScannedTransactionMapperTest {
+class ScannedTransactionBoundaryMapperTest {
 
     @Inject
     ScannedTransactionBoundaryDtoMapperImpl sut;
@@ -24,18 +24,18 @@ class ScannedTransactionMapperTest {
     void shouldMapScannedTransactionToDto() {
         //given
 
-        ScannedTransaction domain = ScannedTransaction.builder()
-                                                      .id("id")
-                                                      .amount(BigDecimal.TEN)
-                                                      .transactionCreated(true)
-                                                      .cardType(CardType.VISA)
-                                                      .date(LocalDate.now())
-                                                      .description("scannedTransactionDesc")
-                                                      .yearMonth(YearMonth.of(2022, 1))
-                                                      .build();
+        final ScannedTransaction domain = ScannedTransaction.builder()
+                                                            .id("id")
+                                                            .amount(BigDecimal.TEN)
+                                                            .transactionCreated(true)
+                                                            .cardType(CardType.VISA)
+                                                            .date(LocalDate.now())
+                                                            .description("scannedTransactionDesc")
+                                                            .yearMonth(YearMonth.of(2022, 1))
+                                                            .build();
 
         //when
-        ScannedTransactionBoundaryDto dto = sut.mapToDto(domain);
+        final ScannedTransactionBoundaryDto dto = sut.mapToDto(domain);
 
         //then
         assertNotNull(dto);

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-class ClosingProcessMapperTest {
+class ClosingProcessBoundaryDtoMapperTest {
 
     @Inject
     ClosingProcessBoundaryDtoMapperImpl sut;
@@ -21,16 +21,16 @@ class ClosingProcessMapperTest {
     @Test
     void shouldMapClosingProcessToDto() {
         //given
-        ClosingProcess domain = ClosingProcess.builder()
-                                              .id("id")
-                                              .yearMonth(YearMonth.of(2022, 1))
-                                              .manualEntryStatus(ClosingProcessStatus.NEW)
-                                              .uploadStatus(ClosingProcessStatus.DONE)
-                                              .transferStatus(ClosingProcessStatus.STARTED)
-                                              .build();
+        final ClosingProcess domain = ClosingProcess.builder()
+                                                    .id("id")
+                                                    .yearMonth(YearMonth.of(2022, 1))
+                                                    .manualEntryStatus(ClosingProcessStatus.NEW)
+                                                    .uploadStatus(ClosingProcessStatus.DONE)
+                                                    .transferStatus(ClosingProcessStatus.STARTED)
+                                                    .build();
 
         //when
-        ClosingProcessBoundaryDto dto = sut.mapToDto(domain);
+        final ClosingProcessBoundaryDto dto = sut.mapToDto(domain);
 
         //then
         assertNotNull(dto);
