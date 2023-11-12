@@ -10,10 +10,4 @@ public interface TransactionBoundaryDtoMapper {
     Transaction mapToDomain(TransactionBoundaryDto dto);
 
     TransactionBoundaryDto mapToDto(Transaction domain);
-
-//    Transaction mapToDomain(TransactionDbo entity);
-//
-//    @Mapping(target = "creditedAccountId", source = "creditedAccount.id")
-//    @Mapping(target = "debitedAccountId", source = "debitedAccount.id")
-//    TransactionDbo mapToEntity(Transaction domain);
 }

@@ -10,8 +10,4 @@ public interface RealAccountBoundaryDtoMapper {
     RealAccount mapToDomain(RealAccountBoundaryDto dto);
 
     RealAccountBoundaryDto mapToDto(RealAccount domain);
-
-//    RealAccountDbo mapToEntity(RealAccount domain);
-//
-//    RealAccount mapToDomain(RealAccountDbo entity);
 }

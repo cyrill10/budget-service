@@ -10,8 +10,4 @@ import java.time.YearMonth;
 public interface ScannedTransactionBoundaryDtoMapper {
 
     ScannedTransactionBoundaryDto mapToDto(ScannedTransaction domain);
-
-//    ScannedTransaction mapToDomain(ScannedTransactionDbo entity);
-//
-//    ScannedTransactionDbo mapToEntity(ScannedTransaction domain);
 }
