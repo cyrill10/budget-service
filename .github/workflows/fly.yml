@@ -1,0 +1,36 @@
+name: Build and Deploy Quarkus to Fly.io
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '18'
+
+    - name: Update Version and Build Native Quarkus App
+      run: |
+        new_version=$(date +"%Y%m%d%H%M%S")
+        mvn versions:set -DnewVersion=$new_version
+        ./mvnw clean package -Pnative -Dnative-image.docker-build=true
+        docker build -f src/main/docker/Dockerfile.native -t budget-service .
+
+    - name: Log in to Fly.io
+      uses: flyio/cli-action@v1
+      with:
+        command: auth login
+        args: ${{ secrets.FLY_API_TOKEN }}
+
+    - name: Deploy to Fly.io
+      run: fly deploy -i budget-service
