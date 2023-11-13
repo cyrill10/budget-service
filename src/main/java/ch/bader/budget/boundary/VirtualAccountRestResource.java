@@ -14,7 +14,6 @@ import jakarta.ws.rs.core.MediaType;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/budget/virtualAccount/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,7 +28,7 @@ public class VirtualAccountRestResource {
 
     @POST
     @Path("/add")
-    public VirtualAccountBoundaryDto addNewAccount(VirtualAccountBoundaryDto dto) {
+    public VirtualAccountBoundaryDto addNewAccount(final VirtualAccountBoundaryDto dto) {
         VirtualAccount virtualAccount = virtualAccountBoundaryDtoMapper.mapToDomain(dto);
         virtualAccount.setBalance(BigDecimal.ZERO);
         virtualAccount.setIsDeleted(Boolean.FALSE);
@@ -39,7 +38,7 @@ public class VirtualAccountRestResource {
 
     @PUT
     @Path("/update")
-    public VirtualAccountBoundaryDto updateAccount(VirtualAccountBoundaryDto dto) {
+    public VirtualAccountBoundaryDto updateAccount(final VirtualAccountBoundaryDto dto) {
         VirtualAccount virtualAccount = virtualAccountBoundaryDtoMapper.mapToDomain(dto);
         virtualAccount = virtualAccountService.updateVirtualAccount(virtualAccount);
         return virtualAccountBoundaryDtoMapper.mapToDto(virtualAccount);
@@ -47,15 +46,15 @@ public class VirtualAccountRestResource {
 
     @GET
     @Path("/")
-    public VirtualAccountBoundaryDto getAccountById(String id) {
-        VirtualAccount virtualAccount = virtualAccountService.getAccountById(id);
+    public VirtualAccountBoundaryDto getAccountById(final String id) {
+        final VirtualAccount virtualAccount = virtualAccountService.getAccountById(id);
         return virtualAccountBoundaryDtoMapper.mapToDto(virtualAccount);
     }
 
     @GET
     @Path("/list")
     public List<VirtualAccountBoundaryDto> getAllAccounts() {
-        List<VirtualAccount> accounts = virtualAccountService.getAllVirtualAccounts();
-        return accounts.stream().map(virtualAccountBoundaryDtoMapper::mapToDto).collect(Collectors.toList());
+        final List<VirtualAccount> accounts = virtualAccountService.getAllVirtualAccounts();
+        return accounts.stream().map(virtualAccountBoundaryDtoMapper::mapToDto).toList();
     }
 }

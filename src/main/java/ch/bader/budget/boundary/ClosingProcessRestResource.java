@@ -25,7 +25,6 @@ import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.time.YearMonth;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/budget/closingProcess")
 @Produces(MediaType.APPLICATION_JSON)
@@ -45,35 +44,34 @@ public class ClosingProcessRestResource {
 
 
     @GET
-    public ClosingProcessBoundaryDto getClosingProcess(@RestQuery Integer year, @RestQuery Integer month) {
-        YearMonth yearMonth = YearMonth.of(year, month + 1);
-        ClosingProcess closingProcess = closingProcessService.getClosingProcess(yearMonth);
+    public ClosingProcessBoundaryDto getClosingProcess(@RestQuery final Integer year, @RestQuery final Integer month) {
+        final YearMonth yearMonth = YearMonth.of(year, month + 1);
+        final ClosingProcess closingProcess = closingProcessService.getClosingProcess(yearMonth);
         return closingProcessBoundaryDtoMapper.mapToDto(closingProcess);
 
     }
 
     @POST
     @Path("closeFileUpload")
-    public ClosingProcessBoundaryDto closeFileUpload(@RestQuery Integer year, @RestQuery Integer month) {
-        YearMonth yearMonth = YearMonth.of(year, month + 1);
-        ClosingProcess closingProcess = closingProcessService.closeFileUpload(yearMonth);
+    public ClosingProcessBoundaryDto closeFileUpload(@RestQuery final Integer year, @RestQuery final Integer month) {
+        final YearMonth yearMonth = YearMonth.of(year, month + 1);
+        final ClosingProcess closingProcess = closingProcessService.closeFileUpload(yearMonth);
         return closingProcessBoundaryDtoMapper.mapToDto(closingProcess);
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public RestResponse<List<ScannedTransactionBoundaryDto>> uploadFile(
-        @RestQuery Integer year,
-        @RestQuery Integer month,
-        @RestForm FileUpload file) {
-        YearMonth yearMonth = YearMonth.of(year, month + 1);
-        List<ScannedTransaction> scannedTransactions = closingProcessService.uploadFile(yearMonth, file);
+        @RestQuery final Integer year,
+        @RestQuery final Integer month,
+        @RestForm final FileUpload file) {
+        final YearMonth yearMonth = YearMonth.of(year, month + 1);
+        final List<ScannedTransaction> scannedTransactions = closingProcessService.uploadFile(yearMonth, file);
         if (scannedTransactions != null) {
             return RestResponse.ok(scannedTransactions
                 .stream()
                 .map(scannedTransactionBoundaryDtoMapper::mapToDto)
-                .collect(
-                    Collectors.toList()));
+                .toList());
         }
         return RestResponse.status(RestResponse.Status.EXPECTATION_FAILED);
     }
@@ -81,39 +79,39 @@ public class ClosingProcessRestResource {
     @GET
     @Path("/transactions")
     public List<ScannedTransactionBoundaryDto> getTransactions(
-        @RestQuery Integer year,
-        @RestQuery Integer month) {
-        YearMonth yearMonth = YearMonth.of(year, month + 1);
+        @RestQuery final Integer year,
+        @RestQuery final Integer month) {
+        final YearMonth yearMonth = YearMonth.of(year, month + 1);
         return closingProcessService
             .getTransactions(yearMonth)
             .stream()
-            .map(scannedTransactionBoundaryDtoMapper::mapToDto)
-            .collect(Collectors.toList());
+            .map(scannedTransactionBoundaryDtoMapper::mapToDto).toList();
     }
 
     @POST
     @Path("/transactions")
-    public void saveScannedTransactions(SaveScannedTransactionBoundaryDto dto) {
+    public void saveScannedTransactions(final SaveScannedTransactionBoundaryDto dto) {
         closingProcessService.saveScannedTransactions(dto);
     }
 
     @GET
     @Path("/transfer/details")
-    public List<TransferDetailBoundaryDto> getTransferDetails(@RestQuery Integer year,
-                                                              @RestQuery Integer month) {
-        YearMonth yearMonth = YearMonth.of(year, month + 1);
+    public List<TransferDetailBoundaryDto> getTransferDetails(@RestQuery final Integer year,
+                                                              @RestQuery final Integer month) {
+        final YearMonth yearMonth = YearMonth.of(year, month + 1);
         return closingProcessService
             .getTransferDetails(yearMonth)
             .stream()
-            .map(transferDetailBoundaryDtoMapper::mapToDto).collect(Collectors.toList());
+            .map(transferDetailBoundaryDtoMapper::mapToDto)
+            .toList();
 
     }
 
     @POST
     @Path("/transfer/close")
-    public ClosingProcessBoundaryDto closeTransfer(@RestQuery Integer year, @RestQuery Integer month) {
-        YearMonth yearMonth = YearMonth.of(year, month + 1);
-        ClosingProcess closingProcess = closingProcessService.closeTransfer(yearMonth);
+    public ClosingProcessBoundaryDto closeTransfer(@RestQuery final Integer year, @RestQuery final Integer month) {
+        final YearMonth yearMonth = YearMonth.of(year, month + 1);
+        final ClosingProcess closingProcess = closingProcessService.closeTransfer(yearMonth);
         return closingProcessBoundaryDtoMapper.mapToDto(closingProcess);
     }
 }

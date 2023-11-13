@@ -20,7 +20,6 @@ import org.jboss.resteasy.reactive.RestQuery;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Path("/budget/realAccount/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -37,7 +36,7 @@ public class RealAccountRestResource {
 
     @POST
     @Path("/add")
-    public RealAccountBoundaryDto addNewAccount(RealAccountBoundaryDto accountDto) {
+    public RealAccountBoundaryDto addNewAccount(final RealAccountBoundaryDto accountDto) {
         RealAccount account = realAccountBoundaryDtoMapper.mapToDomain(accountDto);
         account = realAccountService.addRealAccount(account);
         return realAccountBoundaryDtoMapper.mapToDto(account);
@@ -45,27 +44,27 @@ public class RealAccountRestResource {
     }
 
     @GET
-    public RealAccountBoundaryDto getAccount(@RestQuery String id) {
-        RealAccount result = realAccountService.getAccountById(id);
+    public RealAccountBoundaryDto getAccount(@RestQuery final String id) {
+        final RealAccount result = realAccountService.getAccountById(id);
         return realAccountBoundaryDtoMapper.mapToDto(result);
     }
 
     @GET
     @Path("/list")
     public List<AccountElementBoundaryDto> getAllAccounts() {
-        Map<RealAccount, List<VirtualAccount>> realAccounts = realAccountService.getAccountMap();
+        final Map<RealAccount, List<VirtualAccount>> realAccounts = realAccountService.getAccountMap();
         return realAccounts.entrySet()
                            .stream()
                            .map(entry -> new AccountElementBoundaryDto(realAccountBoundaryDtoMapper.mapToDto(entry.getKey()),
                                entry.getValue().stream().map(virtualAccountBoundaryDtoMapper::mapToDto)
-                                    .collect(Collectors.toList())))
-                           .collect(Collectors.toList());
+                                    .toList()))
+                           .toList();
     }
 
 
     @PUT
     @Path("/update")
-    public RealAccountBoundaryDto updateAccount(RealAccountBoundaryDto dto) {
+    public RealAccountBoundaryDto updateAccount(final RealAccountBoundaryDto dto) {
         RealAccount account = realAccountBoundaryDtoMapper.mapToDomain(dto);
         account = realAccountService.updateRealAccount(account);
         return realAccountBoundaryDtoMapper.mapToDto(account);

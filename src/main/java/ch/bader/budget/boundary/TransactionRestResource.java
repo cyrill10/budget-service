@@ -29,7 +29,6 @@ import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Path("/budget/transaction/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -47,7 +46,7 @@ public class TransactionRestResource {
 
     @POST
     @Path("/add")
-    public TransactionBoundaryDto createTransaction(TransactionBoundaryDto dto) {
+    public TransactionBoundaryDto createTransaction(final TransactionBoundaryDto dto) {
         if (dto.getCreationDate() == null) {
             dto.setCreationDate(LocalDateTime.now());
         }
@@ -58,7 +57,7 @@ public class TransactionRestResource {
 
     @PUT
     @Path("/update")
-    public TransactionBoundaryDto updateTransaction(TransactionBoundaryDto dto) {
+    public TransactionBoundaryDto updateTransaction(final TransactionBoundaryDto dto) {
         Transaction transaction = transactionBoundaryDtoMapper.mapToDomain(dto);
         transaction = transactionService.updateTransaction(transaction);
         return transactionBoundaryDtoMapper.mapToDto(transaction);
@@ -66,23 +65,23 @@ public class TransactionRestResource {
 
     @DELETE
     @Path("/delete")
-    public void deleteTransaction(@RestQuery String transactionId) {
+    public void deleteTransaction(@RestQuery final String transactionId) {
         transactionService.deleteTransaction(transactionId);
     }
 
     @POST
     @Path("/dublicate")
-    public void duplicateTransaction(TransactionBoundaryDto dto) {
-        Transaction transaction = transactionBoundaryDtoMapper.mapToDomain(dto);
+    public void duplicateTransaction(final TransactionBoundaryDto dto) {
+        final Transaction transaction = transactionBoundaryDtoMapper.mapToDomain(dto);
         transactionService.duplicateTransaction(transaction);
     }
 
     @GET
-    public RestResponse<TransactionBoundaryDto> getTransactionById(@RestQuery String id) {
+    public RestResponse<TransactionBoundaryDto> getTransactionById(@RestQuery final String id) {
         try {
-            Transaction transaction = transactionService.getTransactionById(id);
+            final Transaction transaction = transactionService.getTransactionById(id);
             return RestResponse.ok(transactionBoundaryDtoMapper.mapToDto(transaction));
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
             return RestResponse.status(RestResponse.Status.NOT_FOUND);
         }
 
@@ -91,50 +90,49 @@ public class TransactionRestResource {
     @GET
     @Path("/list")
     public List<TransactionBoundaryDto> getAllTransactions(
-        @RestQuery("date") long dateLong) {
-        LocalDate date = Instant.ofEpochMilli(dateLong)
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate()
-                                .withDayOfMonth(1);
-        List<Transaction> transactions = transactionService.getAllTransactions(date);
+        @RestQuery("date") final long dateLong) {
+        final LocalDate date = Instant.ofEpochMilli(dateLong)
+                                      .atZone(ZoneId.systemDefault())
+                                      .toLocalDate()
+                                      .withDayOfMonth(1);
+        final List<Transaction> transactions = transactionService.getAllTransactions(date);
         return transactions.stream()
                            .map(transactionBoundaryDtoMapper::mapToDto)
-                           .collect(Collectors.toList());
+                           .toList();
     }
 
     @GET
     @Path("/listByMonthAndVirtualAccount")
     public List<TransactionElementBoundaryDto> getAllTransactionsForMonthAndVirtualAccount(
-        @RestQuery("date") long dateLong,
-        @RestQuery String accountId) {
-        LocalDate date = Instant.ofEpochMilli(dateLong)
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate()
-                                .withDayOfMonth(1);
-        List<TransactionListElement> transactionListElements =
+        @RestQuery("date") final long dateLong,
+        @RestQuery final String accountId) {
+        final LocalDate date = Instant.ofEpochMilli(dateLong)
+                                      .atZone(ZoneId.systemDefault())
+                                      .toLocalDate()
+                                      .withDayOfMonth(1);
+        final List<TransactionListElement> transactionListElements =
             transactionService.getAllTransactionsForMonthAndVirtualAccount(
                 date,
                 accountId);
 
         return transactionListElements.stream()
                                       .map(transactionElementBoundaryDtoMapper::mapToDto)
-                                      .collect(Collectors.toList());
+                                      .toList();
     }
 
     @GET
     @Path("/listByMonthAndRealAccount")
     public List<TransactionElementBoundaryDto> getAllTransactionsForMonthAndRealAccount(
-        @RestQuery("date") long dateLong,
-        @RestQuery String accountId) {
-        LocalDate date = Instant.ofEpochMilli(dateLong)
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDate()
-                                .withDayOfMonth(1);
+        @RestQuery("date") final long dateLong,
+        @RestQuery final String accountId) {
+        final LocalDate date = Instant.ofEpochMilli(dateLong)
+                                      .atZone(ZoneId.systemDefault())
+                                      .toLocalDate()
+                                      .withDayOfMonth(1);
         return transactionService.getAllTransactionsForMonthAndRealAccount(date, accountId)
                                  .stream()
                                  .map(transactionElementBoundaryDtoMapper::mapToDto)
-                                 .collect(
-                                     Collectors.toList());
+                                 .toList();
     }
 
     @GET

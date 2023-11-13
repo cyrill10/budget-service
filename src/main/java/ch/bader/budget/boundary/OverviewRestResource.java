@@ -14,7 +14,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Path("/budget/overview/list")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,11 +26,12 @@ public class OverviewRestResource {
     OverviewService overviewService;
 
     @GET
-    public List<OverviewElementBoundaryDto> getAllTransactions(@RestQuery long dateLong) {
-        LocalDate localDate = Instant.ofEpochMilli(dateLong).atZone(ZoneId.systemDefault()).toLocalDate();
+    public List<OverviewElementBoundaryDto> getAllTransactions(@RestQuery final long dateLong) {
+        final LocalDate localDate = Instant.ofEpochMilli(dateLong).atZone(ZoneId.systemDefault()).toLocalDate();
         return overviewService.getAllTransactions(localDate)
                               .stream()
                               .map(overviewElementBoundaryDtoMapper::mapToDto)
-                              .collect(Collectors.toList());
+                              .toList();
+
     }
 }
