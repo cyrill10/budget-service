@@ -18,12 +18,12 @@ public class DateRestResource {
     @Inject
     MonthGenerator monthGenerator;
 
-    public DateRestResource(MonthGenerator monthGenerator) {
+    public DateRestResource(final MonthGenerator monthGenerator) {
         this.monthGenerator = monthGenerator;
     }
 
     @GET
     public List<LocalDate> getAllMonths() {
-        return monthGenerator.getallMonths();
+        return monthGenerator.getAllMonths();
     }
 }

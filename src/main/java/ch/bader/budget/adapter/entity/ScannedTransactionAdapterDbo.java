@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -19,7 +18,7 @@ public class ScannedTransactionAdapterDbo {
 
     private ObjectId id;
     private String description;
-    private LocalDate date;
+    private String date;
     private BigDecimal amount;
     private Boolean transactionCreated;
     private String cardType;

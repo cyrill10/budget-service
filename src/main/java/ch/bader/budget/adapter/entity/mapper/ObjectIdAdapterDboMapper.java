@@ -7,6 +7,9 @@ import org.mapstruct.Mapper;
 public interface ObjectIdAdapterDboMapper {
 
     default ObjectId toDbo(final String id) {
+        if (id == null) {
+            return null;
+        }
         return new ObjectId(id);
     }
 

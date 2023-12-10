@@ -25,23 +25,34 @@ public class Transaction implements Comparable<Transaction> {
     private BigDecimal effectiveAmount;
     private LocalDateTime creationDate;
 
-    public Transaction createDuplicate(LocalDate newDate) {
-        return Transaction.builder()
-                          .budgetedAmount(budgetedAmount)
-                          .effectiveAmount(effectiveAmount)
-                          .creditedAccount(creditedAccount)
-                          .debitedAccount(debitedAccount)
-                          .description(description)
-                          .paymentStatus(paymentStatus)
-                          .indication(indication)
-                          .paymentType(paymentType)
-                          .date(newDate)
-                          .creationDate(LocalDateTime.now())
-                          .build();
+    public Transaction createDuplicate(final LocalDate newDate) {
+        return Transaction
+            .builder()
+            .budgetedAmount(budgetedAmount)
+            .effectiveAmount(effectiveAmount)
+            .creditedAccount(creditedAccount)
+            .debitedAccount(debitedAccount)
+            .description(description)
+            .paymentStatus(paymentStatus)
+            .indication(indication)
+            .paymentType(paymentType)
+            .date(newDate)
+            .creationDate(LocalDateTime.now())
+            .build();
     }
 
     @Override
-    public int compareTo(Transaction o) {
+    public int compareTo(final Transaction o) {
         return creationDate.compareTo(o.creationDate);
+    }
+
+    public boolean isForAccount(final VirtualAccount virtualAccount) {
+        return creditedAccount.equals(virtualAccount) || debitedAccount.equals(virtualAccount);
+    }
+
+    public boolean isForAccount(final RealAccount realAccount) {
+        return creditedAccount.getUnderlyingAccount().equals(realAccount) || debitedAccount
+            .getUnderlyingAccount()
+            .equals(realAccount);
     }
 }

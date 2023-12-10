@@ -16,22 +16,27 @@ public class Balance {
         this(BigDecimal.ZERO, BigDecimal.ZERO);
     }
 
-    public Balance(Balance copyBalance) {
+    public Balance(final BigDecimal initialBalance) {
+        this(initialBalance, initialBalance);
+    }
+
+
+    public Balance(final Balance copyBalance) {
         this(copyBalance.getEffective(), copyBalance.getBudgeted());
     }
 
 
-    public void add(BigDecimal effective, BigDecimal budgeted) {
+    public void add(final BigDecimal effective, final BigDecimal budgeted) {
         this.effective = this.effective.add(effective);
         this.budgeted = this.budgeted.add(budgeted);
     }
 
-    public void subtract(BigDecimal effective, BigDecimal budgeted) {
+    public void subtract(final BigDecimal effective, final BigDecimal budgeted) {
         this.effective = this.effective.subtract(effective);
         this.budgeted = this.budgeted.subtract(budgeted);
     }
 
-    public Balance add(Balance balance) {
+    public Balance add(final Balance balance) {
         effective = effective.add(balance.effective);
         if (budgeted != null && balance.budgeted != null) {
             budgeted = budgeted.add(balance.budgeted);

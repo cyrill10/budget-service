@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.codecs.pojo.annotations.BsonId;
-
-import java.math.BigDecimal;
+import org.bson.types.ObjectId;
 
 @Data
 @Builder
@@ -16,10 +14,9 @@ import java.math.BigDecimal;
 @MongoEntity(collection = "virtualAccount")
 public class VirtualAccountAdapterDbo {
 
-    @BsonId
-    private String id;
+    private ObjectId id;
     private String name;
-    private BigDecimal balance;
+    private String balance;
     private Boolean isDeleted;
     private String underlyingAccountId;
 

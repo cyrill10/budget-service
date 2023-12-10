@@ -4,7 +4,7 @@ import ch.bader.budget.adapter.entity.RealAccountAdapterDbo;
 import ch.bader.budget.domain.RealAccount;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = AccountTypeAdapterDboMapper.class)
+@Mapper(uses = {AccountTypeAdapterDboMapper.class, ObjectIdAdapterDboMapper.class})
 public interface RealAccountAdapterDboMapper {
 
     RealAccountAdapterDbo mapToDbo(RealAccount domain);

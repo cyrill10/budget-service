@@ -21,22 +21,22 @@ class DateIT {
     @Test
     void shouldReturnMonths() {
         // Given
-        LocalDate firstDay = LocalDate.of(2022, 12, 1);
-        LocalDate expectedLastDate = LocalDate.now().plusYears(1).withDayOfMonth(1);
+        final LocalDate firstDay = LocalDate.of(2021, 12, 1);
+        final LocalDate expectedLastDate = LocalDate.now().plusYears(1).withDayOfMonth(1);
 
-        long diff = ChronoUnit.MONTHS.between(
-            firstDay,
-            expectedLastDate);
+        final long diff = ChronoUnit.MONTHS.between(firstDay, expectedLastDate);
         // When & Then
-        JsonPath response = given().contentType(ContentType.JSON)
-                                   .when()
-                                   .get("/budget/date/month/list")
-                                   .then()
-                                   .statusCode(HttpStatus.SC_OK)
-                                   .body("[0]", equalTo(firstDay.toString()))
-                                   .extract().jsonPath();
+        final JsonPath response = given()
+            .contentType(ContentType.JSON)
+            .when()
+            .get("/budget/date/month/list")
+            .then()
+            .statusCode(HttpStatus.SC_OK)
+            .body("[0]", equalTo(firstDay.toString()))
+            .extract()
+            .jsonPath();
 
-        List<String> list = response.get("$");
+        final List<String> list = response.get("$");
         assertEquals(diff, list.size());
     }
 }

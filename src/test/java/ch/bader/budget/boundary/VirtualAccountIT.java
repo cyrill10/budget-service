@@ -35,7 +35,7 @@ class VirtualAccountIT extends AbstractIT {
 
     @Test
     void shouldAddAccount() {
-        RealAccountBoundaryDto underlyingAccount = RealAccountBoundaryDto
+        final RealAccountBoundaryDto underlyingAccount = RealAccountBoundaryDto
             .builder()
             //4
             .id("62a50222ce7b3719fa1aac5f")
@@ -45,10 +45,10 @@ class VirtualAccountIT extends AbstractIT {
                                              .build())
             .build();
 
-        VirtualAccountBoundaryDto input = VirtualAccountBoundaryDto.builder()
-                                                                   .name("TestVirtual")
-                                                                   .underlyingAccount(underlyingAccount)
-                                                                   .build();
+        final VirtualAccountBoundaryDto input = VirtualAccountBoundaryDto.builder()
+                                                                         .name("TestVirtual")
+                                                                         .underlyingAccount(underlyingAccount)
+                                                                         .build();
 
         given().contentType(ContentType.JSON)
                .body(asJsonString(input))
@@ -69,7 +69,7 @@ class VirtualAccountIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
         //act
-        RealAccountBoundaryDto underlyingAccount = RealAccountBoundaryDto
+        final RealAccountBoundaryDto underlyingAccount = RealAccountBoundaryDto
             .builder()
             //5
             .id("62d172d33b2f355e5ceafb5e")
@@ -79,7 +79,7 @@ class VirtualAccountIT extends AbstractIT {
                                              .build())
             .build();
 
-        VirtualAccountBoundaryDto input = VirtualAccountBoundaryDto
+        final VirtualAccountBoundaryDto input = VirtualAccountBoundaryDto
             .builder()
             //8
             .id("62d172da3b2f355e5ceafb69")
@@ -151,7 +151,7 @@ class VirtualAccountIT extends AbstractIT {
                .get("/budget/virtualAccount/list")
                .then()
                .statusCode(HttpStatus.SC_OK)
-               .body("$.size()", equalTo(34))
+               .body("$.size()", equalTo(37))
                //3
                .body("[0].id", equalTo("62d172d93b2f355e5ceafb64"))
                .body("[0].name", equalTo("Bonviva"))

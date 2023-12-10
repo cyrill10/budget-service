@@ -15,13 +15,13 @@ import java.time.YearMonth;
 public class ClosingProcess implements Comparable<ClosingProcess> {
 
     private String id;
-    YearMonth yearMonth;
+    private YearMonth yearMonth;
     private ClosingProcessStatus uploadStatus;
     private ClosingProcessStatus manualEntryStatus;
     private ClosingProcessStatus transferStatus;
 
     @Override
-    public int compareTo(ClosingProcess o) {
+    public int compareTo(final ClosingProcess o) {
         return yearMonth.compareTo(o.yearMonth);
     }
 }

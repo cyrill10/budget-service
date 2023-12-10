@@ -10,6 +10,9 @@ public interface TransactionIndicationAdapterDboMapper {
     ValueEnumAdapterDbo mapToDbo(TransactionIndication domain);
 
     default TransactionIndication mapToDomain(final ValueEnumAdapterDbo entity) {
+        if (entity == null) {
+            return null;
+        }
         return TransactionIndication.forValue(entity.getValue());
     }
 }

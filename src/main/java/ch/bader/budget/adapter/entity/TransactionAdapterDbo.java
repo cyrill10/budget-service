@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 import org.bson.types.ObjectId;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -23,12 +21,12 @@ public class TransactionAdapterDbo {
     private ObjectId id;
     private String creditedAccountId;
     private String debitedAccountId;
-    private LocalDate date;
+    private String date;
     private String description;
     private ValueEnumAdapterDbo paymentStatus;
     private ValueEnumAdapterDbo indication;
     private ValueEnumAdapterDbo paymentType;
-    private BigDecimal budgetedAmount;
-    private BigDecimal effectiveAmount;
+    private String budgetedAmount;
+    private String effectiveAmount;
     private LocalDateTime creationDate;
 }

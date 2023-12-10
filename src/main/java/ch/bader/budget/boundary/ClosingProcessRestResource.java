@@ -18,11 +18,13 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.reactive.ResponseStatus;
 import org.jboss.resteasy.reactive.RestForm;
 import org.jboss.resteasy.reactive.RestQuery;
 import org.jboss.resteasy.reactive.RestResponse;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
+import java.io.IOException;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -64,7 +66,7 @@ public class ClosingProcessRestResource {
     public RestResponse<List<ScannedTransactionBoundaryDto>> uploadFile(
         @RestQuery final Integer year,
         @RestQuery final Integer month,
-        @RestForm final FileUpload file) {
+        @RestForm final FileUpload file) throws IOException {
         final YearMonth yearMonth = YearMonth.of(year, month + 1);
         final List<ScannedTransaction> scannedTransactions = closingProcessService.uploadFile(yearMonth, file);
         if (scannedTransactions != null) {
@@ -89,6 +91,7 @@ public class ClosingProcessRestResource {
     }
 
     @POST
+    @ResponseStatus(200)
     @Path("/transactions")
     public void saveScannedTransactions(final SaveScannedTransactionBoundaryDto dto) {
         closingProcessService.saveScannedTransactions(dto);
@@ -108,6 +111,7 @@ public class ClosingProcessRestResource {
     }
 
     @POST
+    @ResponseStatus(200)
     @Path("/transfer/close")
     public ClosingProcessBoundaryDto closeTransfer(@RestQuery final Integer year, @RestQuery final Integer month) {
         final YearMonth yearMonth = YearMonth.of(year, month + 1);

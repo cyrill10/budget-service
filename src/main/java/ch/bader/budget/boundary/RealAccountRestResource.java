@@ -2,9 +2,12 @@ package ch.bader.budget.boundary;
 
 import ch.bader.budget.boundary.dto.AccountElementBoundaryDto;
 import ch.bader.budget.boundary.dto.RealAccountBoundaryDto;
+import ch.bader.budget.boundary.dto.ValueEnumBoundaryDto;
+import ch.bader.budget.boundary.dto.mapper.AccountTypeBoundaryDtoMapper;
 import ch.bader.budget.boundary.dto.mapper.RealAccountBoundaryDtoMapper;
 import ch.bader.budget.boundary.dto.mapper.VirtualAccountBoundaryDtoMapper;
 import ch.bader.budget.core.service.RealAccountService;
+import ch.bader.budget.core.service.VirtualAccountService;
 import ch.bader.budget.domain.RealAccount;
 import ch.bader.budget.domain.VirtualAccount;
 import ch.bader.budget.type.AccountType;
@@ -15,6 +18,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.reactive.ResponseStatus;
 import org.jboss.resteasy.reactive.RestQuery;
 
 import java.util.Arrays;
@@ -29,13 +33,21 @@ public class RealAccountRestResource {
     RealAccountService realAccountService;
 
     @Inject
+    VirtualAccountService virtualAccountService;
+
+    @Inject
     RealAccountBoundaryDtoMapper realAccountBoundaryDtoMapper;
 
     @Inject
     VirtualAccountBoundaryDtoMapper virtualAccountBoundaryDtoMapper;
 
+    @Inject
+    AccountTypeBoundaryDtoMapper accountTypeBoundaryDtoMapper;
+
     @POST
+    @ResponseStatus(201)
     @Path("/add")
+
     public RealAccountBoundaryDto addNewAccount(final RealAccountBoundaryDto accountDto) {
         RealAccount account = realAccountBoundaryDtoMapper.mapToDomain(accountDto);
         account = realAccountService.addRealAccount(account);
@@ -52,13 +64,13 @@ public class RealAccountRestResource {
     @GET
     @Path("/list")
     public List<AccountElementBoundaryDto> getAllAccounts() {
-        final Map<RealAccount, List<VirtualAccount>> realAccounts = realAccountService.getAccountMap();
-        return realAccounts.entrySet()
-                           .stream()
-                           .map(entry -> new AccountElementBoundaryDto(realAccountBoundaryDtoMapper.mapToDto(entry.getKey()),
-                               entry.getValue().stream().map(virtualAccountBoundaryDtoMapper::mapToDto)
-                                    .toList()))
-                           .toList();
+        final Map<RealAccount, List<VirtualAccount>> map = virtualAccountService.getAccountMap();
+        return map.entrySet()
+                  .stream()
+                  .map(entry -> new AccountElementBoundaryDto(realAccountBoundaryDtoMapper.mapToDto(entry.getKey()),
+                      entry.getValue().stream().map(virtualAccountBoundaryDtoMapper::mapToDto)
+                           .toList()))
+                  .toList();
     }
 
 
@@ -72,7 +84,7 @@ public class RealAccountRestResource {
 
     @GET
     @Path("/type/list")
-    public List<AccountType> getAllAccountTypes() {
-        return Arrays.asList(AccountType.values());
+    public List<ValueEnumBoundaryDto> getAllAccountTypes() {
+        return Arrays.stream(AccountType.values()).map(accountTypeBoundaryDtoMapper::mapToDto).toList();
     }
 }

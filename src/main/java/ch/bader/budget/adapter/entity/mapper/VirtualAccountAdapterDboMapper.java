@@ -5,7 +5,7 @@ import ch.bader.budget.domain.VirtualAccount;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = RealAccountAdapterDboMapper.class)
+@Mapper(uses = {RealAccountAdapterDboMapper.class, ObjectIdAdapterDboMapper.class, BigDecimalAdapterDboMapper.class})
 public interface VirtualAccountAdapterDboMapper {
 
     @Mapping(target = "underlyingAccountId", source = "underlyingAccount.id")

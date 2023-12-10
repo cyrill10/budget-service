@@ -11,6 +11,8 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.reactive.ResponseStatus;
+import org.jboss.resteasy.reactive.RestQuery;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,12 +29,13 @@ public class VirtualAccountRestResource {
 
 
     @POST
+    @ResponseStatus(201)
     @Path("/add")
     public VirtualAccountBoundaryDto addNewAccount(final VirtualAccountBoundaryDto dto) {
         VirtualAccount virtualAccount = virtualAccountBoundaryDtoMapper.mapToDomain(dto);
         virtualAccount.setBalance(BigDecimal.ZERO);
         virtualAccount.setIsDeleted(Boolean.FALSE);
-        virtualAccount = virtualAccountService.updateVirtualAccount(virtualAccount);
+        virtualAccount = virtualAccountService.addVirtualAccount(virtualAccount);
         return virtualAccountBoundaryDtoMapper.mapToDto(virtualAccount);
     }
 
@@ -46,7 +49,7 @@ public class VirtualAccountRestResource {
 
     @GET
     @Path("/")
-    public VirtualAccountBoundaryDto getAccountById(final String id) {
+    public VirtualAccountBoundaryDto getAccountById(@RestQuery final String id) {
         final VirtualAccount virtualAccount = virtualAccountService.getAccountById(id);
         return virtualAccountBoundaryDtoMapper.mapToDto(virtualAccount);
     }

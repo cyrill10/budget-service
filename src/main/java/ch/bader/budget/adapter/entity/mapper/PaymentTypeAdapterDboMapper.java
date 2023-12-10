@@ -10,6 +10,9 @@ public interface PaymentTypeAdapterDboMapper {
     ValueEnumAdapterDbo mapToDbo(PaymentType domain);
 
     default PaymentType mapToDomain(final ValueEnumAdapterDbo entity) {
+        if (entity == null) {
+            return null;
+        }
         return PaymentType.forValue(entity.getValue());
     }
 }

@@ -1,11 +1,15 @@
 package ch.bader.budget.adapter.repository;
 
-import ch.bader.budget.adapter.entity.RealAccountAdapterDbo;
-import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
-import jakarta.enterprise.context.ApplicationScoped;
+import ch.bader.budget.domain.RealAccount;
 
-@ApplicationScoped
-public class RealAccountRepository implements PanacheMongoRepositoryBase<RealAccountAdapterDbo, String> {
+import java.util.List;
 
-  
+public interface RealAccountRepository {
+    RealAccount getAccountById(String id);
+
+    List<RealAccount> getAll();
+
+    RealAccount addRealAccount(RealAccount account);
+
+    RealAccount updateRealAccount(RealAccount account);
 }

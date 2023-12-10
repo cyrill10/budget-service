@@ -1,6 +1,7 @@
 package ch.bader.budget.adapter.repository;
 
 import ch.bader.budget.adapter.entity.ScannedTransactionAdapterDbo;
+import ch.bader.budget.adapter.repository.mongo.ScannedTransactionRepositoryImpl;
 import ch.bader.budget.domain.ScannedTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -19,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 class ScannedTransactionRepositoryIT {
 
     @Inject
-    ScannedTransactionRepository sut;
+    ScannedTransactionRepositoryImpl sut;
 
     @Test
     void findAllByYearMonth() {
@@ -56,8 +57,6 @@ class ScannedTransactionRepositoryIT {
 
         assertThat(results, hasSize(2));
         assertThat(results,
-            contains(
-                hasProperty("description", is("findableDbo")),
-                hasProperty("description", is("alsoFindableDbo"))));
+            contains(hasProperty("description", is("findableDbo")), hasProperty("description", is("alsoFindableDbo"))));
     }
 }

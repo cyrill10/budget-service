@@ -1,27 +1,25 @@
 package ch.bader.budget.core.service;
 
+import ch.bader.budget.adapter.repository.RealAccountRepository;
 import ch.bader.budget.domain.RealAccount;
-import ch.bader.budget.domain.VirtualAccount;
 import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.List;
-import java.util.Map;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class RealAccountService {
-    public RealAccount addRealAccount(RealAccount account) {
-        return null;
+
+    @Inject
+    RealAccountRepository realAccountRepository;
+
+    public RealAccount addRealAccount(final RealAccount account) {
+        return realAccountRepository.addRealAccount(account);
     }
 
-    public RealAccount getAccountById(String id) {
-        return null;
+    public RealAccount getAccountById(final String id) {
+        return realAccountRepository.getAccountById(id);
     }
 
-    public Map<RealAccount, List<VirtualAccount>> getAccountMap() {
-        return null;
-    }
-
-    public RealAccount updateRealAccount(RealAccount account) {
-        return null;
+    public RealAccount updateRealAccount(final RealAccount account) {
+        return realAccountRepository.updateRealAccount(account);
     }
 }

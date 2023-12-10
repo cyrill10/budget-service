@@ -1,9 +1,25 @@
 package ch.bader.budget.adapter.repository;
 
-import ch.bader.budget.adapter.entity.VirtualAccountAdapterDbo;
-import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
-import jakarta.enterprise.context.ApplicationScoped;
+import ch.bader.budget.domain.RealAccount;
+import ch.bader.budget.domain.VirtualAccount;
 
-@ApplicationScoped
-public class VirtualAccountRepository implements PanacheMongoRepositoryBase<VirtualAccountAdapterDbo, String> {
+import java.util.List;
+import java.util.Map;
+
+public interface VirtualAccountRepository {
+
+    VirtualAccount getAccountById(String id);
+
+    VirtualAccount addVirtualAccount(VirtualAccount virtualAccount);
+
+    VirtualAccount updateVirtualAccount(VirtualAccount virtualAccount);
+
+    Map<String, VirtualAccount> getAllVirtualAccountsWithTheirUnderlyingAccountAsMap();
+
+    List<VirtualAccount> getAllVirtualAccountsWithTheirUnderlyingAccount();
+
+    Map<RealAccount, List<VirtualAccount>> getAccountMap();
+
+    List<VirtualAccount> getAccountsByRealAccount(RealAccount realAccount);
 }
+

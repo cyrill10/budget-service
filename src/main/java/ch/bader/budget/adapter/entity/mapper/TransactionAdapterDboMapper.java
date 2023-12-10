@@ -5,13 +5,7 @@ import ch.bader.budget.domain.Transaction;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = {
-    VirtualAccountAdapterDboMapper.class,
-    PaymentStatusAdapterDboMapper.class,
-    PaymentTypeAdapterDboMapper.class,
-    TransactionIndicationAdapterDboMapper.class,
-    ObjectIdAdapterDboMapper.class
-})
+@Mapper(uses = {VirtualAccountAdapterDboMapper.class, PaymentStatusAdapterDboMapper.class, PaymentTypeAdapterDboMapper.class, TransactionIndicationAdapterDboMapper.class, ObjectIdAdapterDboMapper.class, BigDecimalAdapterDboMapper.class, LocalDateAdapterDboMapper.class})
 public interface TransactionAdapterDboMapper {
 
     Transaction mapToDomain(TransactionAdapterDbo entity);

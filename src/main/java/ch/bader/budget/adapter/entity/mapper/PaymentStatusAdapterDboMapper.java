@@ -10,6 +10,9 @@ public interface PaymentStatusAdapterDboMapper {
     ValueEnumAdapterDbo mapToDbo(PaymentStatus domain);
 
     default PaymentStatus mapToDomain(final ValueEnumAdapterDbo entity) {
+        if (entity == null) {
+            return null;
+        }
         return PaymentStatus.forValue(entity.getValue());
     }
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
 @Data
 @Builder
@@ -14,8 +14,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 @MongoEntity(collection = "realAccount")
 public class RealAccountAdapterDbo {
 
-    @BsonId
-    private String id;
+    private ObjectId id;
     private String name;
     private ValueEnumAdapterDbo accountType;
 
