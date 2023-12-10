@@ -139,10 +139,10 @@ public class RealAccountBalanceService {
                 final BigDecimal effectiveBalanceChange = EFFECTIVE_AMOUNT_FUNCTION.apply(t);
                 final BigDecimal budgetedBalanceChange = BUDGETED_AMOUNT_FUNCTION.apply(t,
                     realAccount.isPrebudgetedAccount());
-                if (t.getCreditedAccount().getUnderlyingAccount().equals(realAccount)) {
+                if (realAccount.isCreditedAccount(t)) {
                     balance.subtract(effectiveBalanceChange, budgetedBalanceChange);
                 }
-                if (t.getDebitedAccount().getUnderlyingAccount().equals(realAccount)) {
+                if (realAccount.isDebitedAccount(t)) {
                     balance.add(effectiveBalanceChange, budgetedBalanceChange);
                 }
             });

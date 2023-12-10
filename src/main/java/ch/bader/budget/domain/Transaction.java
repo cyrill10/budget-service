@@ -45,14 +45,4 @@ public class Transaction implements Comparable<Transaction> {
     public int compareTo(final Transaction o) {
         return creationDate.compareTo(o.creationDate);
     }
-
-    public boolean isForAccount(final VirtualAccount virtualAccount) {
-        return creditedAccount.equals(virtualAccount) || debitedAccount.equals(virtualAccount);
-    }
-
-    public boolean isForAccount(final RealAccount realAccount) {
-        return creditedAccount.getUnderlyingAccount().equals(realAccount) || debitedAccount
-            .getUnderlyingAccount()
-            .equals(realAccount);
-    }
 }

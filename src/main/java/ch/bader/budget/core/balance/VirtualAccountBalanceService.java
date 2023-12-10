@@ -118,17 +118,17 @@ public class VirtualAccountBalanceService {
         transactions
             .stream()
             .distinct()
-            .filter(t -> t.isForAccount(virtualAccount))
+            .filter(virtualAccount::isRelevantForTransaction)
             .filter(t -> !t.getDate().isBefore(lowDateIncl))
-            .filter(t -> !highDateIncl.isAfter(t.getDate()))
+            .filter(t -> !t.getDate().isAfter(highDateIncl))
             .forEach(t -> {
                 final BigDecimal effectiveBalanceChange = EFFECTIVE_AMOUNT_FUNCTION.apply(t);
                 final BigDecimal budgetedBalanceChange = BUDGETED_AMOUNT_FUNCTION.apply(t,
                     virtualAccount.isPrebudgetedAccount());
-                if (virtualAccount == t.getCreditedAccount()) {
+                if (virtualAccount.isCreditedAccount(t)) {
                     balance.subtract(effectiveBalanceChange, budgetedBalanceChange);
                 }
-                if (virtualAccount == t.getDebitedAccount()) {
+                if (virtualAccount.isDebitedAccount(t)) {
                     balance.add(effectiveBalanceChange, budgetedBalanceChange);
                 }
             });

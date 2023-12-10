@@ -12,5 +12,5 @@ public interface ScannedTransactionRepository {
 
     List<ScannedTransaction> saveAll(List<ScannedTransaction> scannedTransactions);
 
-    List<ScannedTransaction> updateAll(List<ScannedTransaction> scannedTransactions);
+    void updateAll(List<ScannedTransaction> scannedTransactions);
 }

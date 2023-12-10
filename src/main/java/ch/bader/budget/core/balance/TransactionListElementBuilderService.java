@@ -115,62 +115,9 @@ public class TransactionListElementBuilderService {
             .isPrebudgetedAccount();
     }
 
-
-    public TransactionListElement createTransactionElement(final Transaction transaction,
-                                                           final VirtualAccount virtualAccount,
-                                                           final Balance accountBalance) {
-        BigDecimal amount = BigDecimal.ZERO;
-        BigDecimal budgetedAmount = BigDecimal.ZERO;
-        if (virtualAccount.equals(transaction.getDebitedAccount())) {
-            amount = transaction.getEffectiveAmount();
-            budgetedAmount = transaction.getBudgetedAmount();
-            accountBalance.add(EFFECTIVE_AMOUNT_FUNCTION.apply(transaction),
-                BUDGETED_AMOUNT_FUNCTION.apply(transaction, virtualAccount.isPrebudgetedAccount()));
-        }
-        if (virtualAccount.equals(transaction.getCreditedAccount())) {
-            amount = BigDecimal.ZERO.subtract(transaction.getEffectiveAmount());
-            budgetedAmount = BigDecimal.ZERO.subtract(transaction.getBudgetedAmount());
-
-            accountBalance.subtract(EFFECTIVE_AMOUNT_FUNCTION.apply(transaction),
-                BUDGETED_AMOUNT_FUNCTION.apply(transaction, virtualAccount.isPrebudgetedAccount()));
-        }
-
-        return new TransactionListElement(transaction,
-            amount,
-            budgetedAmount,
-            accountBalance.getEffective(),
-            accountBalance.getBudgeted());
-    }
-
-    public TransactionListElement createTransactionElement(final Transaction transaction,
-                                                           final RealAccount realAccount,
-                                                           final Balance accountBalance) {
-        BigDecimal amount = BigDecimal.ZERO;
-        BigDecimal budgetedAmount = BigDecimal.ZERO;
-        if (realAccount.equals(transaction.getDebitedAccount().getUnderlyingAccount())) {
-            amount = transaction.getEffectiveAmount();
-            budgetedAmount = transaction.getBudgetedAmount();
-            accountBalance.add(EFFECTIVE_AMOUNT_FUNCTION.apply(transaction),
-                BUDGETED_AMOUNT_FUNCTION.apply(transaction, realAccount.isPrebudgetedAccount()));
-        }
-        if (realAccount.equals(transaction.getCreditedAccount().getUnderlyingAccount())) {
-            amount = BigDecimal.ZERO.subtract(transaction.getEffectiveAmount());
-            budgetedAmount = BigDecimal.ZERO.subtract(transaction.getBudgetedAmount());
-
-            accountBalance.subtract(EFFECTIVE_AMOUNT_FUNCTION.apply(transaction),
-                BUDGETED_AMOUNT_FUNCTION.apply(transaction, realAccount.isPrebudgetedAccount()));
-        }
-
-        return new TransactionListElement(transaction,
-            amount,
-            budgetedAmount,
-            accountBalance.getEffective(),
-            accountBalance.getBudgeted());
-    }
-
-    public <T extends Account> TransactionListElement createTransactionElement(final Transaction transaction,
-                                                                               final T account,
-                                                                               final Balance accountBalance) {
+    private <T extends Account> TransactionListElement createTransactionElement(final Transaction transaction,
+                                                                                final T account,
+                                                                                final Balance accountBalance) {
         BigDecimal amount = BigDecimal.ZERO;
         BigDecimal budgetedAmount = BigDecimal.ZERO;
         if (account.isDebitedAccount(transaction)) {

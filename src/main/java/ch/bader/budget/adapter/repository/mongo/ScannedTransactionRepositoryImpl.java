@@ -21,9 +21,7 @@ public class ScannedTransactionRepositoryImpl implements ScannedTransactionRepos
     @Override
     public List<ScannedTransaction> findAllById(final List<String> ids) {
         final List<ObjectId> objectIds = ids.stream().map(ObjectId::new).toList();
-        return stream("_id in ?1", objectIds)
-            .map(scannedTransactionAdapterDboMapper::mapToDomain)
-            .toList();
+        return stream("_id in ?1", objectIds).map(scannedTransactionAdapterDboMapper::mapToDomain).toList();
     }
 
     @Override
@@ -38,17 +36,18 @@ public class ScannedTransactionRepositoryImpl implements ScannedTransactionRepos
     public List<ScannedTransaction> saveAll(final List<ScannedTransaction> scannedTransactions) {
         final List<ScannedTransactionAdapterDbo> dbos = scannedTransactions
             .stream()
-            .map(scannedTransactionAdapterDboMapper::mapToDbo).toList();
+            .map(scannedTransactionAdapterDboMapper::mapToDbo)
+            .toList();
         persist(dbos);
         return dbos.stream().map(scannedTransactionAdapterDboMapper::mapToDomain).toList();
     }
 
     @Override
-    public List<ScannedTransaction> updateAll(final List<ScannedTransaction> scannedTransactions) {
+    public void updateAll(final List<ScannedTransaction> scannedTransactions) {
         final List<ScannedTransactionAdapterDbo> dbos = scannedTransactions
             .stream()
-            .map(scannedTransactionAdapterDboMapper::mapToDbo).toList();
+            .map(scannedTransactionAdapterDboMapper::mapToDbo)
+            .toList();
         update(dbos);
-        return dbos.stream().map(scannedTransactionAdapterDboMapper::mapToDomain).toList();
     }
 }
