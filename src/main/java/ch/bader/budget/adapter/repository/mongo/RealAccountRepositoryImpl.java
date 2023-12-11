@@ -10,13 +10,13 @@ import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class RealAccountRepositoryImpl implements RealAccountRepository, PanacheMongoRepository<RealAccountAdapterDbo> {
 
     @Inject
     RealAccountAdapterDboMapper realAccountAdapterDboMapper;
+
 
     @Override
     public RealAccount getAccountById(final String id) {
@@ -25,10 +25,7 @@ public class RealAccountRepositoryImpl implements RealAccountRepository, Panache
 
     @Override
     public List<RealAccount> getAll() {
-        return streamAll()
-            .map(realAccountAdapterDboMapper::mapToDomain)
-            .sorted()
-            .collect(Collectors.toList());
+        return streamAll().map(realAccountAdapterDboMapper::mapToDomain).sorted().toList();
     }
 
     @Override

@@ -8,6 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(uses = {VirtualAccountAdapterDboMapper.class, PaymentStatusAdapterDboMapper.class, PaymentTypeAdapterDboMapper.class, TransactionIndicationAdapterDboMapper.class, ObjectIdAdapterDboMapper.class, BigDecimalAdapterDboMapper.class, LocalDateAdapterDboMapper.class})
 public interface TransactionAdapterDboMapper {
 
+    @Mapping(target = "creditedAccount", ignore = true)
+    @Mapping(target = "debitedAccount", ignore = true)
     Transaction mapToDomain(TransactionAdapterDbo entity);
 
     @Mapping(target = "creditedAccountId", source = "creditedAccount.id")

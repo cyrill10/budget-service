@@ -1,4 +1,4 @@
-package ch.bader.budget.core.balance.function;
+package ch.bader.budget.core.function;
 
 import ch.bader.budget.domain.Transaction;
 

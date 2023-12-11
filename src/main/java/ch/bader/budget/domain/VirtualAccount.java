@@ -59,13 +59,6 @@ public class VirtualAccount extends Account implements Comparable<VirtualAccount
         return getName().compareTo(o.getName());
     }
 
-    public BiPredicate<Transaction, LocalDate> getTransactionPredicate() {
-        if (isPrebudgetedAccount()) {
-            return onlyLastMonthFilter;
-        }
-        return noFilter;
-    }
-
     public Balance getInitialBalance() {
         if (getUnderlyingAccount().getAccountType().isAlienAccount()) {
             return new Balance(BigDecimal.ZERO, BigDecimal.ZERO);

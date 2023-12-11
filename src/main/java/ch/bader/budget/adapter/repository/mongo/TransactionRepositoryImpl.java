@@ -14,6 +14,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -101,8 +102,8 @@ public class TransactionRepositoryImpl implements TransactionRepository, Panache
     }
 
     @Override
-    public List<Transaction> getAllTransactions(final LocalDate date) {
-        return findAllByDateBetween(date.minusDays(1), date.plusMonths(1));
+    public List<Transaction> getAllTransactionsForMonth(final YearMonth month) {
+        return findAllByDateBetween(month.minusMonths(1).atEndOfMonth(), month.plusMonths(1).atDay(1));
     }
 
     @Override
@@ -119,6 +120,11 @@ public class TransactionRepositoryImpl implements TransactionRepository, Panache
         return findAllByDateBetweenAndVirtualAccountId(monthGenerator.getStartDate().minusDays(1),
             unitlExclusive,
             List.of(virtualAccountId));
+    }
+
+    @Override
+    public List<Transaction> getAllTransactionsUntil(final YearMonth month) {
+        return findAllByDateBetween(monthGenerator.getStartDate().minusDays(1), month.plusMonths(1).atDay(1));
     }
 
     private List<Transaction> transformAndAddAccounts(final Stream<TransactionAdapterDbo> dbos) {

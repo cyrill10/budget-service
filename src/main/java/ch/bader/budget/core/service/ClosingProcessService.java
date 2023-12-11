@@ -5,12 +5,16 @@ import ch.bader.budget.adapter.repository.ScannedTransactionRepository;
 import ch.bader.budget.adapter.repository.TransactionRepository;
 import ch.bader.budget.adapter.repository.VirtualAccountRepository;
 import ch.bader.budget.boundary.dto.SaveScannedTransactionBoundaryDto;
+import ch.bader.budget.core.balance.AccountBalanceService;
 import ch.bader.budget.core.process.closing.ScannedTransactionCsvBean;
+import ch.bader.budget.domain.Balance;
 import ch.bader.budget.domain.ClosingProcess;
+import ch.bader.budget.domain.RealAccount;
 import ch.bader.budget.domain.ScannedTransaction;
 import ch.bader.budget.domain.Transaction;
 import ch.bader.budget.domain.TransferDetails;
 import ch.bader.budget.domain.VirtualAccount;
+import ch.bader.budget.type.AccountType;
 import ch.bader.budget.type.ClosingProcessStatus;
 import ch.bader.budget.type.PaymentStatus;
 import ch.bader.budget.type.PaymentType;
@@ -29,6 +33,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -45,6 +50,9 @@ public class ClosingProcessService {
 
     @Inject
     TransactionRepository transactionRepository;
+
+    @Inject
+    AccountBalanceService accountBalanceService;
 
     public ClosingProcess getClosingProcess(final YearMonth yearMonth) {
         return closingProcessRepository.getClosingProcessByYearMonth(yearMonth);
@@ -112,8 +120,33 @@ public class ClosingProcessService {
     }
 
     public List<TransferDetails> getTransferDetails(final YearMonth yearMonth) {
-        // TODO implement so it actually works!!
-        return null;
+        final Map<RealAccount, List<VirtualAccount>> accountMap = virtualAccountRepository.getAccountMap();
+        final List<Transaction> allTransactions = transactionRepository.getAllTransactionsUntil(yearMonth);
+        return accountMap
+            .entrySet()
+            .stream()
+            .filter(e -> AccountType.SAVING.equals(e.getKey().getAccountType()))
+            .map(e -> mapToTransferDetail(e.getKey(), e.getValue(), yearMonth, allTransactions))
+            .toList();
+    }
+
+    private TransferDetails mapToTransferDetail(final RealAccount realAccount,
+                                                final List<VirtualAccount> virtualAccounts,
+                                                final YearMonth yearMonth,
+                                                final List<Transaction> allTransactions) {
+        final Balance balanceLastMonth = accountBalanceService.getBalanceAtYearMonth(realAccount,
+            virtualAccounts,
+            yearMonth.minusMonths(1),
+            allTransactions);
+        final Balance balanceThisMonth = accountBalanceService.getBalanceAtYearMonth(realAccount,
+            virtualAccounts,
+            yearMonth,
+            allTransactions);
+        return TransferDetails
+            .builder()
+            .accountName(realAccount.getName())
+            .transferAmount(balanceThisMonth.getEffective().subtract(balanceLastMonth.getEffective()))
+            .build();
     }
 
     public ClosingProcess closeTransfer(final YearMonth yearMonth) {

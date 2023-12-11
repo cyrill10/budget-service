@@ -60,8 +60,8 @@ public class TransactionService {
         transactionRepository.saveTransactions(newTransactions);
     }
 
-    public List<Transaction> getAllTransactions(final LocalDate date) {
-        return transactionRepository.getAllTransactions(date);
+    public List<Transaction> getAllTransactionsForMonth(final YearMonth month) {
+        return transactionRepository.getAllTransactionsForMonth(month);
     }
 
     public List<TransactionListElement> getAllTransactionsForMonthAndVirtualAccount(final LocalDate date,

@@ -11,5 +11,6 @@ public interface VirtualAccountAdapterDboMapper {
     @Mapping(target = "underlyingAccountId", source = "underlyingAccount.id")
     VirtualAccountAdapterDbo mapToDbo(VirtualAccount domain);
 
+    @Mapping(target = "underlyingAccount", ignore = true)
     VirtualAccount mapToDomain(VirtualAccountAdapterDbo entity);
 }

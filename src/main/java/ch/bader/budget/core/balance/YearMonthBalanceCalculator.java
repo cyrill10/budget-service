@@ -32,14 +32,20 @@ public class YearMonthBalanceCalculator {
     MonthGenerator monthGenerator;
 
     @Inject
-    VirtualAccountBalanceService virtualAccountBalanceService;
+    AccountBalanceService accountBalanceService;
 
     @Scheduled(cron = "0 0 1 * * ?")
     void recalculateYearMonthBalances() {
         final LocalDate recalcDate = LocalDate.now().minusMonths(2).withDayOfMonth(1);
 
+        recalculateYearMonthBalance(recalcDate);
+
+    }
+
+    public void recalculateYearMonthBalance(final LocalDate recalcDate) {
         yearMonthBalanceRepository.deleteAllYearMonthBalances();
-        final List<Transaction> allTransactions = transactionService.getAllTransactions(recalcDate);
+        final List<Transaction> allTransactions = transactionService.getAllTransactionsForMonth(YearMonth.from(
+            recalcDate));
 
         final List<VirtualAccount> allVirtualAccounts = virtualAccountService.getAllVirtualAccounts();
 
@@ -49,7 +55,6 @@ public class YearMonthBalanceCalculator {
             .stream()
             .map(YearMonth::from)
             .forEach(yearMonth -> recalculateAndSaveMonth(yearMonth, allVirtualAccounts, allTransactions));
-
     }
 
     private void recalculateAndSaveMonth(final YearMonth yearMonth,
@@ -67,9 +72,7 @@ public class YearMonthBalanceCalculator {
                                                       final VirtualAccount virtualAccount,
                                                       final List<Transaction> list) {
 
-        final Balance balanceAtYearMonth = virtualAccountBalanceService.getBalanceAtYearMonth(virtualAccount,
-            yearMonth,
-            list);
+        final Balance balanceAtYearMonth = accountBalanceService.getBalanceAtYearMonth(virtualAccount, yearMonth, list);
 
         return YearMonthBalance
             .builder()

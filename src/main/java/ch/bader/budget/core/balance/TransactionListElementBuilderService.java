@@ -1,7 +1,7 @@
 package ch.bader.budget.core.balance;
 
-import ch.bader.budget.core.balance.function.BudgetedAmountFunction;
-import ch.bader.budget.core.balance.function.EffectiveAmountFunction;
+import ch.bader.budget.core.function.BudgetedAmountFunction;
+import ch.bader.budget.core.function.EffectiveAmountFunction;
 import ch.bader.budget.domain.Account;
 import ch.bader.budget.domain.Balance;
 import ch.bader.budget.domain.RealAccount;
@@ -23,10 +23,7 @@ public class TransactionListElementBuilderService {
     public static final BudgetedAmountFunction BUDGETED_AMOUNT_FUNCTION = new BudgetedAmountFunction();
 
     @Inject
-    VirtualAccountBalanceService virtualAccountBalanceService;
-
-    @Inject
-    RealAccountBalanceService realAccountBalanceService;
+    AccountBalanceService accountBalanceService;
 
     public List<TransactionListElement> getTransactionListElementsForMonth(final List<Transaction> allTransactionsForAccount,
                                                                            final VirtualAccount virtualAccount,
@@ -36,7 +33,7 @@ public class TransactionListElementBuilderService {
         if (virtualAccount.isAlienAccount() || virtualAccount.isPrebudgetedAccount()) {
             return calculateTransactionListElements(new Balance(), allTransactionsForAccount, virtualAccount, month);
         }
-        final Balance balanceAtBeginn = virtualAccountBalanceService.getBalanceAtYearMonth(virtualAccount,
+        final Balance balanceAtBeginn = accountBalanceService.getBalanceAtYearMonth(virtualAccount,
             month.minusMonths(1),
             allTransactionsForAccount);
 
@@ -52,7 +49,7 @@ public class TransactionListElementBuilderService {
         if (realAccount.isAlienAccount() || realAccount.isPrebudgetedAccount()) {
             return calculateTransactionListElements(new Balance(), allTransactionsForAccount, realAccount, month);
         }
-        final Balance balanceAtBeginn = realAccountBalanceService.getBalanceAtYearMonth(realAccount,
+        final Balance balanceAtBeginn = accountBalanceService.getBalanceAtYearMonth(realAccount,
             virtualAccounts,
             month.minusMonths(1),
             allTransactionsForAccount);

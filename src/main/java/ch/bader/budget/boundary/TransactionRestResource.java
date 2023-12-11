@@ -29,6 +29,7 @@ import org.jboss.resteasy.reactive.RestResponse;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
@@ -108,7 +109,7 @@ public class TransactionRestResource {
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
             .withDayOfMonth(1);
-        final List<Transaction> transactions = transactionService.getAllTransactions(date);
+        final List<Transaction> transactions = transactionService.getAllTransactionsForMonth(YearMonth.from(date));
         return transactions.stream().map(transactionBoundaryDtoMapper::mapToDto).toList();
     }
 

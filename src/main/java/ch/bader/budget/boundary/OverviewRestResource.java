@@ -11,7 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.jboss.resteasy.reactive.RestQuery;
 
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.List;
 
@@ -27,11 +27,14 @@ public class OverviewRestResource {
 
     @GET
     public List<OverviewElementBoundaryDto> getAllTransactions(@RestQuery final long dateLong) {
-        final LocalDate localDate = Instant.ofEpochMilli(dateLong).atZone(ZoneId.systemDefault()).toLocalDate();
-        return overviewService.getAllTransactions(localDate)
-                              .stream()
-                              .map(overviewElementBoundaryDtoMapper::mapToDto)
-                              .toList();
-
+        final YearMonth month = YearMonth.from(Instant
+            .ofEpochMilli(dateLong)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate());
+        return overviewService
+            .getAllTransactions(month)
+            .stream()
+            .map(overviewElementBoundaryDtoMapper::mapToDto)
+            .toList();
     }
 }
