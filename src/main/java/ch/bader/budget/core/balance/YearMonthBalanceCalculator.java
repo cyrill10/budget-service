@@ -1,8 +1,8 @@
 package ch.bader.budget.core.balance;
 
+import ch.bader.budget.adapter.repository.TransactionRepository;
 import ch.bader.budget.adapter.repository.YearMonthBalanceRepository;
 import ch.bader.budget.boundary.time.MonthGenerator;
-import ch.bader.budget.core.service.TransactionService;
 import ch.bader.budget.core.service.VirtualAccountService;
 import ch.bader.budget.domain.Balance;
 import ch.bader.budget.domain.Transaction;
@@ -20,7 +20,7 @@ import java.util.List;
 public class YearMonthBalanceCalculator {
 
     @Inject
-    TransactionService transactionService;
+    TransactionRepository transactionRepository;
 
     @Inject
     YearMonthBalanceRepository yearMonthBalanceRepository;
@@ -44,7 +44,7 @@ public class YearMonthBalanceCalculator {
 
     public void recalculateYearMonthBalance(final LocalDate recalcDate) {
         yearMonthBalanceRepository.deleteAllYearMonthBalances();
-        final List<Transaction> allTransactions = transactionService.getAllTransactionsForMonth(YearMonth.from(
+        final List<Transaction> allTransactions = transactionRepository.getAllTransactionsUntil(YearMonth.from(
             recalcDate));
 
         final List<VirtualAccount> allVirtualAccounts = virtualAccountService.getAllVirtualAccounts();
