@@ -143,7 +143,7 @@ public class AccountBalanceService {
             addTransactionsToBalance(balance,
                 transactions,
                 account,
-                latestBalanceForVirtualAccounts.get(0).getYearMonth().atDay(1),
+                latestBalanceForVirtualAccounts.get(0).getYearMonth().plusMonths(1).atDay(1),
                 yearMonth.atEndOfMonth());
         }
         return balance;

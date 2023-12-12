@@ -16,7 +16,7 @@ public class YearMonthBalanceAdapterDbo {
 
     private ObjectId id;
     private String yearMonth;
-    private ObjectId virtualAccountId;
+    private String virtualAccountId;
     private String balance;
 
 }

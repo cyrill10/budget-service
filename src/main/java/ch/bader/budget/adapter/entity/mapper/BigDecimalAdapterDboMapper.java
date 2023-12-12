@@ -15,6 +15,9 @@ public abstract class BigDecimalAdapterDboMapper {
     }
 
     public String mapToDboString(final BigDecimal bigDecimal) {
+        if (bigDecimal == null) {
+            return null;
+        }
         return bigDecimal.toString();
     }
 }
