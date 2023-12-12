@@ -26,11 +26,8 @@ jobs:
           ./mvnw clean package -Pnative -Dnative-image.docker-build=true
           docker build -f src/main/docker/Dockerfile.native-micro -t budget-service .
 
-      - name: Log in to Fly.io
-        uses: flyio/cli-action@v1
-        with:
-          command: auth login
-          args: ${{ secrets.FLY_API_TOKEN }}
-
-      - name: Deploy to Fly.io
-        run: fly deploy -i budget-service
+      - name: Deploy in to Fly.io
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
