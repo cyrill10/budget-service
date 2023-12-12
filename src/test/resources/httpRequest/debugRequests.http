@@ -1,0 +1,63 @@
+GET http://localhost:8080/budget/virtualAccount/list
+Authorization: Basic user password
+Accept: application/json
+
+###
+GET http://localhost:8080/budget/virtualAccount/?id=6
+Authorization: Basic user password
+Accept: application/json
+
+###
+PUT http://localhost:8080/budget/virtualAccount/update
+Authorization: Basic user password
+Content-Type: application/json
+
+{
+  "id": "104",
+  "name": "Stuff2 Edited",
+  "balance": 0,
+  "isDeleted": false,
+  "underlyingAccount": {
+    "id": "3",
+    "name": "Lyka Saving",
+    "accountType": {
+      "name": "Saving",
+      "value": 2
+    }
+  }
+}
+
+###
+
+
+POST http://localhost:8080/budget/virtualAccount/add
+Authorization: Basic user password
+Content-Type: application/json
+
+{
+  "id": null,
+  "name": "Stuff2",
+  "underlyingAccount": {
+    "id": "3",
+    "name": "Lyka Saving",
+    "accountType": {
+      "name": "Saving",
+      "value": 2
+    }
+  },
+  "projection": null
+}
+
+###
+GET http://localhost:8080/actuator/health
+Accept: application/json
+
+###
+GET http://localhost:8080/actuator/info
+Accept: application/json
+
+###
+GET http://localhost:8080/budget/date/month/list
+Authorization: Basic user password
+Accept: application/json
+

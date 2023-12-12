@@ -1,0 +1,239 @@
+[
+  {
+    "name": "Checking",
+    "balanceAfter": 2337.54,
+    "budgetedBalanceAfter": 2337.54,
+    "projection": 4282.740,
+    "budgetedProjection": 4282.740,
+    "id": "62d172d23b2f355e5ceafb5a",
+    "realAccount": true
+  },
+  {
+    "name": "Checking",
+    "balanceAfter": 121.82,
+    "budgetedBalanceAfter": 121.82,
+    "projection": -442.73,
+    "budgetedProjection": -442.73,
+    "id": "62d172d93b2f355e5ceafb65",
+    "realAccount": false
+  },
+  {
+    "name": "Electricity/ Laundry",
+    "balanceAfter": 503.05,
+    "budgetedBalanceAfter": 503.05,
+    "projection": 760.05,
+    "budgetedProjection": 760.05,
+    "id": "62d172d93b2f355e5ceafb66",
+    "realAccount": false
+  },
+  {
+    "name": "General Expenses",
+    "balanceAfter": 219.87,
+    "budgetedBalanceAfter": 219.87,
+    "projection": 3266.62,
+    "budgetedProjection": 3266.62,
+    "id": "62d172d93b2f355e5ceafb67",
+    "realAccount": false
+  },
+  {
+    "name": "Health Savings",
+    "balanceAfter": -468.35,
+    "budgetedBalanceAfter": -468.35,
+    "projection": 665.300,
+    "budgetedProjection": 665.300,
+    "id": "62d172d93b2f355e5ceafb68",
+    "realAccount": false
+  },
+  {
+    "name": "_13th Salary",
+    "balanceAfter": 1961.15,
+    "budgetedBalanceAfter": 1961.15,
+    "projection": 33.50,
+    "budgetedProjection": 33.50,
+    "id": "62d172da3b2f355e5ceafb83",
+    "realAccount": false
+  },
+  {
+    "name": "Cyrill Saving",
+    "balanceAfter": 1398.22,
+    "budgetedBalanceAfter": 1398.22,
+    "projection": 668.82,
+    "budgetedProjection": 668.82,
+    "id": "62d172d33b2f355e5ceafb5b",
+    "realAccount": true
+  },
+  {
+    "name": "Insurance",
+    "balanceAfter": 640.22,
+    "budgetedBalanceAfter": 640.22,
+    "projection": 560.82,
+    "budgetedProjection": 560.82,
+    "id": "62d172da3b2f355e5ceafb80",
+    "realAccount": false
+  },
+  {
+    "name": "Libera Lyka",
+    "balanceAfter": 3.0,
+    "budgetedBalanceAfter": 3.0,
+    "projection": 63.0,
+    "budgetedProjection": 63.0,
+    "id": "62d172da3b2f355e5ceafb82",
+    "realAccount": false
+  },
+  {
+    "name": "Libero Cyrill",
+    "balanceAfter": 755.0,
+    "budgetedBalanceAfter": 755.0,
+    "projection": 45.0,
+    "budgetedProjection": 45.0,
+    "id": "62d172da3b2f355e5ceafb81",
+    "realAccount": false
+  },
+  {
+    "name": "Lyka Saving",
+    "balanceAfter": 1791.1,
+    "budgetedBalanceAfter": 1791.1,
+    "projection": 12.63,
+    "budgetedProjection": 12.63,
+    "id": "62d172d33b2f355e5ceafb5c",
+    "realAccount": true
+  },
+  {
+    "name": "Taxes",
+    "balanceAfter": 2888.8,
+    "budgetedBalanceAfter": 2888.8,
+    "projection": 1.5,
+    "budgetedProjection": 1.5,
+    "id": "62d172d93b2f355e5ceafb62",
+    "realAccount": false
+  },
+  {
+    "name": "Tuition",
+    "balanceAfter": 100.0,
+    "budgetedBalanceAfter": 100.0,
+    "projection": 0.00,
+    "budgetedProjection": 0.00,
+    "id": "62d172da3b2f355e5ceafb6f",
+    "realAccount": false
+  },
+  {
+    "name": "Vacation",
+    "balanceAfter": -1197.7,
+    "budgetedBalanceAfter": -1197.7,
+    "projection": 11.13,
+    "budgetedProjection": 11.13,
+    "id": "62d172da3b2f355e5ceafb6e",
+    "realAccount": false
+  },
+  {
+    "name": "PHP Money",
+    "balanceAfter": 0,
+    "budgetedBalanceAfter": 0,
+    "projection": 82850.34,
+    "budgetedProjection": 82850.34,
+    "id": "62dbd0b9a513386b4764f074",
+    "realAccount": true
+  },
+  {
+    "name": "Cash",
+    "balanceAfter": 0,
+    "budgetedBalanceAfter": 0,
+    "projection": 59000,
+    "budgetedProjection": 59000,
+    "id": "62dbd0dba513386b4764f077",
+    "realAccount": false
+  },
+  {
+    "name": "Wise Cyrill",
+    "balanceAfter": 0,
+    "budgetedBalanceAfter": 0,
+    "projection": 21199.55,
+    "budgetedProjection": 21199.55,
+    "id": "62dbd0c6a513386b4764f075",
+    "realAccount": false
+  },
+  {
+    "name": "Wise Lyka",
+    "balanceAfter": 0,
+    "budgetedBalanceAfter": 0,
+    "projection": 2650.79,
+    "budgetedProjection": 2650.79,
+    "id": "62dbd0d3a513386b4764f076",
+    "realAccount": false
+  },
+  {
+    "name": "Credit Cards",
+    "balanceAfter": 0.00,
+    "budgetedBalanceAfter": 0.00,
+    "projection": 0.00,
+    "budgetedProjection": 0.00,
+    "id": "62d172d33b2f355e5ceafb5d",
+    "realAccount": true
+  },
+  {
+    "name": "Bonviva",
+    "balanceAfter": 0.0,
+    "budgetedBalanceAfter": 0.0,
+    "projection": 0.0,
+    "budgetedProjection": 0.0,
+    "id": "62d172d93b2f355e5ceafb64",
+    "realAccount": false
+  },
+  {
+    "name": "Miles & More",
+    "balanceAfter": 0.00,
+    "budgetedBalanceAfter": 0.00,
+    "projection": 0.00,
+    "budgetedProjection": 0.00,
+    "id": "62d172d93b2f355e5ceafb63",
+    "realAccount": false
+  },
+  {
+    "name": "Prebudget",
+    "balanceAfter": 2218.20,
+    "budgetedBalanceAfter": 1900.0,
+    "projection": -318.20,
+    "id": "62d172d33b2f355e5ceafb5e",
+    "realAccount": true
+  },
+  {
+    "name": "Going Out",
+    "balanceAfter": 718.9,
+    "budgetedBalanceAfter": 300.0,
+    "projection": -418.9,
+    "id": "62d172da3b2f355e5ceafb69",
+    "realAccount": false
+  },
+  {
+    "name": "Groceries",
+    "balanceAfter": 626.30,
+    "budgetedBalanceAfter": 800.0,
+    "projection": 173.70,
+    "id": "62d172da3b2f355e5ceafb6a",
+    "realAccount": false
+  },
+  {
+    "name": "Lunch Cyrill",
+    "balanceAfter": 300.00,
+    "budgetedBalanceAfter": 300.0,
+    "projection": 0.00,
+    "id": "62d172da3b2f355e5ceafb6b",
+    "realAccount": false
+  },
+  {
+    "name": "Lunch Lyka",
+    "balanceAfter": 300.00,
+    "budgetedBalanceAfter": 300.0,
+    "projection": 0.00,
+    "id": "62d172da3b2f355e5ceafb6c",
+    "realAccount": false
+  },
+  {
+    "name": "Transportation",
+    "balanceAfter": 273.0,
+    "budgetedBalanceAfter": 200.0,
+    "projection": -73.0,
+    "id": "62d172da3b2f355e5ceafb6d",
+    "realAccount": false
+  }
+]
