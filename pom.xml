@@ -18,7 +18,8 @@
         <quarkus.platform.version>3.5.0</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.1.2</surefire-plugin.version>
-        <opencsv.version>5.7.1</opencsv.version>
+        <opencsv.version>5.9</opencsv.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -72,7 +73,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>${lombok.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
