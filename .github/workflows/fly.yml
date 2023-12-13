@@ -23,8 +23,6 @@ jobs:
         run: |
           new_version=$(date +"%Y%m%d%H%M%S")
           mvn versions:set -DnewVersion=$new_version
-          mvn clean package -Pnative -Dnative-image.docker-build=true
-          docker build -f src/main/docker/Dockerfile.native-micro -t budget-service .
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
