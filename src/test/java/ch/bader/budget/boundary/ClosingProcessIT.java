@@ -22,7 +22,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import static ch.bader.budget.TestUtils.asJsonString;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -44,7 +43,7 @@ class ClosingProcessIT extends AbstractIT {
         populateDatabaseFull(mongoClient);
 
         //act + assert
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)
@@ -64,7 +63,7 @@ class ClosingProcessIT extends AbstractIT {
         populateDatabaseFull(mongoClient);
 
         //act + assert
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)
@@ -83,7 +82,7 @@ class ClosingProcessIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)
@@ -97,7 +96,7 @@ class ClosingProcessIT extends AbstractIT {
             .body("manualEntryStatus.value", equalTo(ClosingProcessStatus.NEW.getValue()));
 
         //act + assert
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .queryParam("year", 2022)
@@ -111,7 +110,7 @@ class ClosingProcessIT extends AbstractIT {
             .body("manualEntryStatus.value", equalTo(ClosingProcessStatus.NEW.getValue()));
 
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)
@@ -130,7 +129,7 @@ class ClosingProcessIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)
@@ -145,7 +144,7 @@ class ClosingProcessIT extends AbstractIT {
             .body("transferStatus.value", equalTo(ClosingProcessStatus.NEW.getValue()));
 
         //act + assert
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .queryParam("year", 2022)
@@ -160,7 +159,7 @@ class ClosingProcessIT extends AbstractIT {
             .body("transferStatus.value", equalTo(ClosingProcessStatus.DONE.getValue()));
 
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)
@@ -188,7 +187,7 @@ class ClosingProcessIT extends AbstractIT {
             final File file = TestUtils.loadFile("creditCard/exampleTransactions.csv");
 
             //act + assert
-            given()
+            givenWithAuth()
                 .contentType(ContentType.MULTIPART)
                 .when()
                 .queryParam("year", 2021)
@@ -217,7 +216,7 @@ class ClosingProcessIT extends AbstractIT {
             //act + assert
 
             // read all scanned Transactions
-            final JsonPath jsonPath = given()
+            final JsonPath jsonPath = givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
                 .queryParam("year", 2021)
@@ -276,7 +275,7 @@ class ClosingProcessIT extends AbstractIT {
                 .build();
 
             // create transactions from scannedtransactions
-            given()
+            givenWithAuth()
                 .contentType(ContentType.JSON)
                 .body(asJsonString(body))
                 .when()
@@ -286,7 +285,7 @@ class ClosingProcessIT extends AbstractIT {
 
 
             // read scanned transactions again
-            given()
+            givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
                 .queryParam("year", 2021)
@@ -314,7 +313,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[115].transactionCreated", equalTo(true));
 
             // read transactions
-            given()
+            givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
                 .param("date", "1638316800000")
@@ -351,7 +350,7 @@ class ClosingProcessIT extends AbstractIT {
             //act + assert
 
             // read all scanned Transactions
-            final JsonPath jsonPath = given()
+            final JsonPath jsonPath = givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
                 .queryParam("year", 2021)
@@ -393,7 +392,7 @@ class ClosingProcessIT extends AbstractIT {
                 .build();
 
             // create transactions from scannedtransactions
-            given()
+            givenWithAuth()
                 .contentType(ContentType.JSON)
                 .body(asJsonString(body))
                 .when()
@@ -403,7 +402,7 @@ class ClosingProcessIT extends AbstractIT {
 
 
             // read scanned transactions again
-            given()
+            givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
                 .queryParam("year", 2021)
@@ -427,7 +426,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[105].transactionCreated", equalTo(true));
 
             // read transactions
-            given()
+            givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
                 .param("date", "1638316800000")
@@ -470,7 +469,7 @@ class ClosingProcessIT extends AbstractIT {
         populateDatabaseFull(mongoClient);
 
         //act + assert
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)
@@ -485,7 +484,7 @@ class ClosingProcessIT extends AbstractIT {
             .body("transferStatus.value", equalTo(ClosingProcessStatus.NEW.getValue()));
 
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("year", 2022)

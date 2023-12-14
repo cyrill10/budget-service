@@ -21,7 +21,6 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 
 import static ch.bader.budget.TestUtils.asJsonString;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.isA;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -76,7 +75,7 @@ class TransactionIT extends AbstractIT {
             .build();
 
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .body(asJsonString(input))
             .when()
@@ -152,7 +151,7 @@ class TransactionIT extends AbstractIT {
                                                                    .build();
 
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .body(asJsonString(input))
             .when()
@@ -169,7 +168,7 @@ class TransactionIT extends AbstractIT {
             .body("debitedAccount.underlyingAccount.accountType.value", equalTo(AccountType.CHECKING.getValue()));
 
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             //294
@@ -194,7 +193,7 @@ class TransactionIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             //294
@@ -218,7 +217,7 @@ class TransactionIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             //294
@@ -227,7 +226,7 @@ class TransactionIT extends AbstractIT {
             .then()
             .statusCode(HttpStatus.SC_OK);
 
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             //294
@@ -296,7 +295,7 @@ class TransactionIT extends AbstractIT {
                                                                    .effectiveAmount(BigDecimal.valueOf(400))
                                                                    .build();
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .body(asJsonString(input))
             .when()
@@ -310,7 +309,7 @@ class TransactionIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("date", "1654041600000")
@@ -341,7 +340,7 @@ class TransactionIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("date", "1651363200000")
@@ -389,7 +388,7 @@ class TransactionIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("date", "1654041600000")
@@ -429,7 +428,7 @@ class TransactionIT extends AbstractIT {
     @Test
     void shouldGetPaymentTyps() {
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .get("/budget/transaction/type/list")
@@ -447,7 +446,7 @@ class TransactionIT extends AbstractIT {
     @Test
     void shouldGetIndicationTyps() {
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .get("/budget/transaction/indication/list")
@@ -463,7 +462,7 @@ class TransactionIT extends AbstractIT {
     @Test
     void shouldGetStatusTyps() {
         //act
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .get("/budget/transaction/status/list")

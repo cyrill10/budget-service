@@ -10,13 +10,12 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @QuarkusTest
-class DateIT {
+class DateIT extends AbstractIT {
 
     @Test
     void shouldReturnMonths() {
@@ -26,7 +25,7 @@ class DateIT {
 
         final long diff = ChronoUnit.MONTHS.between(firstDay, expectedLastDate);
         // When & Then
-        final JsonPath response = given()
+        final JsonPath response = givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .get("/budget/date/month/list")
