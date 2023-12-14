@@ -17,7 +17,6 @@ import org.skyscreamer.jsonassert.JSONCompareResult;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,7 +43,7 @@ class OverviewIT extends AbstractIT {
             .getList(""));
 
         //act + assert
-        final JSONArray response = new JSONArray(given()
+        final JSONArray response = new JSONArray(givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("dateLong", mills2022May1)
@@ -77,7 +76,7 @@ class OverviewIT extends AbstractIT {
         populateDatabaseFull(mongoClient);
 
         // calculate YearMonth Balance
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .queryParam("year", 2022)
@@ -92,7 +91,7 @@ class OverviewIT extends AbstractIT {
             .getList(""));
 
         //act + assert
-        final JSONArray response = new JSONArray(given()
+        final JSONArray response = new JSONArray(givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("dateLong", mills2022May1)
@@ -125,7 +124,7 @@ class OverviewIT extends AbstractIT {
         populateDatabaseFull(mongoClient);
 
         // calculate YearMonth Balance
-        given()
+        givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .queryParam("year", 2022)
@@ -140,7 +139,7 @@ class OverviewIT extends AbstractIT {
             .getList(""));
 
         //act + assert
-        final JSONArray response = new JSONArray(given()
+        final JSONArray response = new JSONArray(givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
             .param("dateLong", mills2022May1)
