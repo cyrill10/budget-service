@@ -34,10 +34,11 @@ jobs:
           echo "quarkus.security.users.embedded.enabled=true" >> src/main/resources/application.properties
           echo "quarkus.security.users.embedded.plain-text=true" >> src/main/resources/application.properties
           echo "quarkus.security.users.embedded.roles.budget-user=budget" >> src/main/resources/application.properties
-          echo "quarkus.security.users.embedded.users.budget-user=${{ secrets.USER_PASSSWORD }}" >> src/main/resources/application.properties
-          echo "quarkus.mongodb.connection-string=${{ secrets.MONGO_CONNECTION_URL }}" >> src/main/resources/application.properties
           echo "quarkus.mongodb.database=budget" >> src/main/resources/application.properties
 
+      - name: log properties
+        run: |
+          cat src/main/resources/application.properties
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --local-only
