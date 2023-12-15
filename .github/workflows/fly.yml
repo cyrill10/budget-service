@@ -27,8 +27,8 @@ jobs:
       - name: Add properties to file
         run: |
           echo "quarkus.security.users.embedded.roles.budget=budgetRole" >> src/main/resources/application.properties
-          echo "quarkus.security.users.embedded.users.budget=hallo" >> src/main/resources/application.properties
-          echo "quarkus.mongodb.connection-string =${{ secrets.MONGO_CONNECTION_URL }}" >> src/main/resources/application.properties
+          echo "quarkus.security.users.embedded.users.budget=${{ secrets.USER_PASSSWORD }}" >> src/main/resources/application.properties
+          echo "quarkus.mongodb.connection-string=${{ secrets.MONGO_CONNECTION_URL }}" >> src/main/resources/application.properties
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --local-only
