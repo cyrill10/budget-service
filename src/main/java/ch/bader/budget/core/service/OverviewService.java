@@ -10,6 +10,7 @@ import ch.bader.budget.domain.VirtualAccount;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.time.Month;
 import java.time.YearMonth;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -82,7 +83,7 @@ public class OverviewService {
                 null);
         } else {
             balanceEndOfYear = accountBalanceService.getBalanceAtYearMonth(virtualAccount,
-                yearMonth.withMonth(12),
+                Month.DECEMBER.equals(yearMonth.getMonth()) ? yearMonth.plusYears(1) : yearMonth.withMonth(12),
                 transactions);
         }
 
