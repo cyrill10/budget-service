@@ -24,10 +24,6 @@ jobs:
           new_version=$(date +"%Y%m%d%H%M%S")
           mvn versions:set -DnewVersion=$new_version
 
-      - name: Add properties to file
-        run: |
-          echo "quarkus.mongodb.connection-string=${{ secrets.MONGO_CONNECTION_URL }}" >> src/main/resources/application.properties
-
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --local-only
         env:
