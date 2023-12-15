@@ -36,7 +36,7 @@ jobs:
           echo "quarkus.security.users.embedded.roles.budget-user=budget" >> src/main/resources/application.properties
           echo "quarkus.mongodb.database=budget" >> src/main/resources/application.properties
 
-      - name: Add properties to file
+      - name: log properties
         run: |
           cat src/main/resources/application.properties
 
