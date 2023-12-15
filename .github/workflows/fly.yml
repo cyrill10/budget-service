@@ -26,7 +26,7 @@ jobs:
 
       - name: Add properties to file
         run: |
-          echo "budget.startdate=${{ variables.BUDGET_STARTDATE }}" >> src/main/resources/application.properties
+          echo "budget.startdate=${{ vars.BUDGET_STARTDATE }}" >> src/main/resources/application.properties
           echo "quarkus.http.auth.basic=true" >> src/main/resources/application.properties
           echo "quarkus.http.auth.policy.budget-policy.roles-allowed=budget" >> src/main/resources/application.properties
           echo "quarkus.http.auth.permission.budget-permission.paths=/budget*" >> src/main/resources/application.properties
