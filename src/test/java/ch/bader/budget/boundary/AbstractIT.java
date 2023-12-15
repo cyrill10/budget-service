@@ -17,7 +17,7 @@ import static io.restassured.RestAssured.given;
 abstract class AbstractIT {
 
     protected RequestSpecification givenWithAuth() {
-        return given().auth().basic("budget", "password");
+        return given().auth().basic("budget-user", "password");
     }
 
     protected void populateDatabaseFull(final MongoClient mongoClient) throws IOException, URISyntaxException {
