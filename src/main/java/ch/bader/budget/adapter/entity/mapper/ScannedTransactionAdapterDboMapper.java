@@ -4,7 +4,7 @@ import ch.bader.budget.adapter.entity.ScannedTransactionAdapterDbo;
 import ch.bader.budget.domain.ScannedTransaction;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = {ObjectIdAdapterDboMapper.class, YearMonthAdapterDboMapper.class, LocalDateAdapterDboMapper.class})
+@Mapper(uses = {ObjectIdAdapterDboMapper.class, YearMonthAdapterDboMapper.class, LocalDateAdapterDboMapper.class, BigDecimalAdapterDboMapper.class})
 public interface ScannedTransactionAdapterDboMapper {
 
     ScannedTransaction mapToDomain(ScannedTransactionAdapterDbo entity);
