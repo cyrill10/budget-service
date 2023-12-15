@@ -6,10 +6,6 @@ kill_timeout = 5
 primary_region = "ams"
 processes = []
 
-[env]
-  BUDGET_STARTDATE = "2023-01-01"
-  SPRING_DATA_MONGODB_DATABASE = "budget"
-
 [experimental]
   auto_rollback = true
 
