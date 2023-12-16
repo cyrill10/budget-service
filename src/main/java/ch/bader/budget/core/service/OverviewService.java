@@ -32,14 +32,19 @@ public class OverviewService {
 
     public List<OverviewElement> getAllTransactions(final YearMonth yearMonth) {
         final Map<RealAccount, List<VirtualAccount>> accountMap = virtualAccountService.getAccountMap();
-        final List<Transaction> allTransactions = transactionRepository.getAllTransactionsUntil(yearMonth.withMonth(12));
 
-        return calculateOverview(accountMap, allTransactions, yearMonth);
+        final YearMonth projectionDate = Month.DECEMBER.equals(yearMonth.getMonth()) ? yearMonth.plusYears(1) : yearMonth.withMonth(
+            12);
+
+        final List<Transaction> allTransactions = transactionRepository.getAllTransactionsUntil(projectionDate);
+
+        return calculateOverview(accountMap, allTransactions, yearMonth, projectionDate);
     }
 
     private List<OverviewElement> calculateOverview(final Map<RealAccount, List<VirtualAccount>> accountMap,
                                                     final List<Transaction> transactions,
-                                                    final YearMonth yearMonth) {
+                                                    final YearMonth yearMonth,
+                                                    final YearMonth projectionDate) {
         return accountMap
             .entrySet()
             .stream()
@@ -47,7 +52,8 @@ public class OverviewService {
             .map(account -> getOverviewElementListFromRealAccount(account.getKey(),
                 account.getValue(),
                 transactions,
-                yearMonth))
+                yearMonth,
+                projectionDate))
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
 
@@ -57,21 +63,27 @@ public class OverviewService {
     private List<OverviewElement> getOverviewElementListFromRealAccount(final RealAccount realAccount,
                                                                         final List<VirtualAccount> virtualAccounts,
                                                                         final List<Transaction> transactions,
-                                                                        final YearMonth yearMonth) {
+                                                                        final YearMonth yearMonth,
+                                                                        final YearMonth projectionDate) {
 
         final List<OverviewElement> overviewElements = virtualAccounts
             .stream()
-            .map(virtualAccount -> virtualAccountToOverviewElement(virtualAccount, transactions, yearMonth))
+            .map(virtualAccount -> virtualAccountToOverviewElement(virtualAccount,
+                transactions,
+                yearMonth,
+                projectionDate))
             .collect(Collectors.toCollection(LinkedList::new));
 
-        overviewElements.add(0, realAccountToOverviewElement(realAccount, virtualAccounts, transactions, yearMonth));
+        overviewElements.add(0,
+            realAccountToOverviewElement(realAccount, virtualAccounts, transactions, yearMonth, projectionDate));
 
         return overviewElements;
     }
 
     private OverviewElement virtualAccountToOverviewElement(final VirtualAccount virtualAccount,
                                                             final List<Transaction> transactions,
-                                                            final YearMonth yearMonth) {
+                                                            final YearMonth yearMonth,
+                                                            final YearMonth projectionDate) {
 
         final Balance balanceEndOfMonth = accountBalanceService.getBalanceAtYearMonth(virtualAccount,
             yearMonth,
@@ -83,7 +95,7 @@ public class OverviewService {
                 null);
         } else {
             balanceEndOfYear = accountBalanceService.getBalanceAtYearMonth(virtualAccount,
-                Month.DECEMBER.equals(yearMonth.getMonth()) ? yearMonth.plusYears(1) : yearMonth.withMonth(12),
+                projectionDate,
                 transactions);
         }
 
@@ -97,7 +109,8 @@ public class OverviewService {
     private OverviewElement realAccountToOverviewElement(final RealAccount realAccount,
                                                          final List<VirtualAccount> virtualAccounts,
                                                          final List<Transaction> transactions,
-                                                         final YearMonth yearMonth) {
+                                                         final YearMonth yearMonth,
+                                                         final YearMonth projectionDate) {
 
         final Balance balanceEndOfMonth = accountBalanceService.getBalanceAtYearMonth(realAccount,
             virtualAccounts,
@@ -111,7 +124,7 @@ public class OverviewService {
         } else {
             balanceEndOfYear = accountBalanceService.getBalanceAtYearMonth(realAccount,
                 virtualAccounts,
-                yearMonth.withMonth(12),
+                projectionDate,
                 transactions);
         }
 
