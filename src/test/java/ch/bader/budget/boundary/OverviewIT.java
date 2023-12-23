@@ -16,6 +16,10 @@ import org.skyscreamer.jsonassert.JSONCompareResult;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,7 +41,11 @@ class OverviewIT extends AbstractIT {
         //arrange
         populateDatabaseFull(mongoClient);
 
-        final String mills2022May1 = "1651363200000";
+        final long mills2022May1 = ZonedDateTime
+            .of(LocalDate.of(2022, 5, 1), LocalTime.NOON, ZoneId.of("Z"))
+            .toInstant()
+            .toEpochMilli();
+        
         final JSONArray expectedJson = new JSONArray(JsonPath
             .from(TestUtils.loadFileAsString("json/overview.json"))
             .getList(""));
@@ -85,7 +93,10 @@ class OverviewIT extends AbstractIT {
             .then()
             .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        final String mills2022May1 = "1651363200000";
+        final long mills2022May1 = ZonedDateTime
+            .of(LocalDate.of(2022, 5, 1), LocalTime.NOON, ZoneId.of("Z"))
+            .toInstant()
+            .toEpochMilli();
         final JSONArray expectedJson = new JSONArray(JsonPath
             .from(TestUtils.loadFileAsString("json/overview.json"))
             .getList(""));
@@ -133,7 +144,11 @@ class OverviewIT extends AbstractIT {
             .then()
             .statusCode(HttpStatus.SC_NO_CONTENT);
 
-        final String mills2022May1 = "1651363200000";
+        final long mills2022May1 = ZonedDateTime
+            .of(LocalDate.of(2022, 5, 1), LocalTime.NOON, ZoneId.of("Z"))
+            .toInstant()
+            .toEpochMilli();
+
         final JSONArray expectedJson = new JSONArray(JsonPath
             .from(TestUtils.loadFileAsString("json/overview.json"))
             .getList(""));
