@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static ch.bader.budget.TestUtils.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
@@ -66,7 +68,7 @@ class TransactionIT extends AbstractIT {
             .creditedAccount(virtualAccount)
             .debitedAccount(virtualAccount)
             .description("Test Transaction")
-            .date(LocalDate.now())
+            .date(LocalDateTime.now())
             .paymentType(ValueEnumBoundaryDto.builder().value(PaymentType.DEPOSIT.getValue()).build())
             .paymentStatus(ValueEnumBoundaryDto.builder().value(PaymentStatus.PAID.getValue()).build())
             .indication(ValueEnumBoundaryDto.builder().value(TransactionIndication.EXPECTED.getValue()).build())
@@ -133,7 +135,8 @@ class TransactionIT extends AbstractIT {
                                                                    .creditedAccount(virtualAccountChecking)
                                                                    .debitedAccount(virtualAccountHealth)
                                                                    .description("Health Saving")
-                                                                   .date(LocalDate.of(2022, 2, 25))
+                                                                   .date(LocalDateTime.of(LocalDate.of(2022, 2, 25),
+                                                                       LocalTime.NOON))
                                                                    .paymentType(ValueEnumBoundaryDto
                                                                        .builder()
                                                                        .value(PaymentType.DEPOSIT.getValue())
@@ -278,7 +281,8 @@ class TransactionIT extends AbstractIT {
                                                                    .creditedAccount(virtualAccountChecking)
                                                                    .debitedAccount(virtualAccountHealth)
                                                                    .description("Health Saving")
-                                                                   .date(LocalDate.of(2022, 2, 25))
+                                                                   .date(LocalDateTime.of(LocalDate.of(2022, 2, 25),
+                                                                       LocalTime.NOON))
                                                                    .paymentType(ValueEnumBoundaryDto
                                                                        .builder()
                                                                        .value(PaymentType.DEPOSIT.getValue())
@@ -326,7 +330,7 @@ class TransactionIT extends AbstractIT {
             .body("[10].description", equalTo("RACE INN, ROGGWIL BE"))
             .body("[10].budgetedAmount", equalTo(0F))
             .body("[10].effectiveAmount", equalTo(5F))
-            .body("[10].date", equalTo("2022-06-01"))
+            .body("[10].date", equalTo("2022-06-01T12:00:00"))
             .body("[10].debitedAccount.name", equalTo("Lunch Cyrill"))
             .body("[10].creditedAccount.name", equalTo("Miles & More"))
             .body("[10].debitedAccount.underlyingAccount.name", equalTo("Prebudget"))

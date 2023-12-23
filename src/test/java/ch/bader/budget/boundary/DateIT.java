@@ -31,7 +31,7 @@ class DateIT extends AbstractIT {
             .get("/budget/date/month/list")
             .then()
             .statusCode(HttpStatus.SC_OK)
-            .body("[0]", equalTo(firstDay.toString()))
+            .body("[0]", equalTo(firstDay + "T12:00:00"))
             .extract()
             .jsonPath();
 
