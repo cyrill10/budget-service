@@ -19,8 +19,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static ch.bader.budget.TestUtils.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
@@ -68,7 +69,7 @@ class TransactionIT extends AbstractIT {
             .creditedAccount(virtualAccount)
             .debitedAccount(virtualAccount)
             .description("Test Transaction")
-            .date(LocalDateTime.now())
+            .date(ZonedDateTime.now())
             .paymentType(ValueEnumBoundaryDto.builder().value(PaymentType.DEPOSIT.getValue()).build())
             .paymentStatus(ValueEnumBoundaryDto.builder().value(PaymentStatus.PAID.getValue()).build())
             .indication(ValueEnumBoundaryDto.builder().value(TransactionIndication.EXPECTED.getValue()).build())
@@ -135,8 +136,9 @@ class TransactionIT extends AbstractIT {
                                                                    .creditedAccount(virtualAccountChecking)
                                                                    .debitedAccount(virtualAccountHealth)
                                                                    .description("Health Saving")
-                                                                   .date(LocalDateTime.of(LocalDate.of(2022, 2, 25),
-                                                                       LocalTime.NOON))
+                                                                   .date(ZonedDateTime.of(LocalDate.of(2022, 2, 25),
+                                                                       LocalTime.NOON,
+                                                                       ZoneId.of("Z")))
                                                                    .paymentType(ValueEnumBoundaryDto
                                                                        .builder()
                                                                        .value(PaymentType.DEPOSIT.getValue())
@@ -281,8 +283,9 @@ class TransactionIT extends AbstractIT {
                                                                    .creditedAccount(virtualAccountChecking)
                                                                    .debitedAccount(virtualAccountHealth)
                                                                    .description("Health Saving")
-                                                                   .date(LocalDateTime.of(LocalDate.of(2022, 2, 25),
-                                                                       LocalTime.NOON))
+                                                                   .date(ZonedDateTime.of(LocalDate.of(2022, 2, 25),
+                                                                       LocalTime.NOON,
+                                                                       ZoneId.of("Z")))
                                                                    .paymentType(ValueEnumBoundaryDto
                                                                        .builder()
                                                                        .value(PaymentType.DEPOSIT.getValue())
@@ -316,7 +319,8 @@ class TransactionIT extends AbstractIT {
         givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
-            .param("date", "1654041600000")
+            .param("date",
+                ZonedDateTime.of(LocalDate.of(2022, 6, 1), LocalTime.NOON, ZoneId.of("Z")).toInstant().toEpochMilli())
             .get("/budget/transaction/list")
             .then()
             .statusCode(HttpStatus.SC_OK)
@@ -330,7 +334,7 @@ class TransactionIT extends AbstractIT {
             .body("[10].description", equalTo("RACE INN, ROGGWIL BE"))
             .body("[10].budgetedAmount", equalTo(0F))
             .body("[10].effectiveAmount", equalTo(5F))
-            .body("[10].date", equalTo("2022-06-01T12:00:00"))
+            .body("[10].date", equalTo("2022-06-01T12:00:00Z"))
             .body("[10].debitedAccount.name", equalTo("Lunch Cyrill"))
             .body("[10].creditedAccount.name", equalTo("Miles & More"))
             .body("[10].debitedAccount.underlyingAccount.name", equalTo("Prebudget"))
@@ -347,7 +351,8 @@ class TransactionIT extends AbstractIT {
         givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
-            .param("date", "1651363200000")
+            .param("date",
+                ZonedDateTime.of(LocalDate.of(2022, 5, 1), LocalTime.NOON, ZoneId.of("Z")).toInstant().toEpochMilli())
             //2
             .param("accountId", "62d172d93b2f355e5ceafb63")
             .get("/budget/transaction/listByMonthAndVirtualAccount")
@@ -395,7 +400,8 @@ class TransactionIT extends AbstractIT {
         givenWithAuth()
             .contentType(ContentType.JSON)
             .when()
-            .param("date", "1654041600000")
+            .param("date",
+                ZonedDateTime.of(LocalDate.of(2022, 6, 1), LocalTime.NOON, ZoneId.of("Z")).toInstant().toEpochMilli())
             //1
             .param("accountId", "62d172d23b2f355e5ceafb5a")
             .get("/budget/transaction/listByMonthAndRealAccount")

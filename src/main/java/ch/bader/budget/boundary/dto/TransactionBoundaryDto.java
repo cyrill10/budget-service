@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
@@ -16,7 +17,7 @@ public class TransactionBoundaryDto {
     private String id;
     private VirtualAccountBoundaryDto creditedAccount;
     private VirtualAccountBoundaryDto debitedAccount;
-    private LocalDateTime date;
+    private ZonedDateTime date;
     private String description;
     private ValueEnumBoundaryDto paymentStatus;
     private ValueEnumBoundaryDto indication;

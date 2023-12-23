@@ -19,6 +19,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static ch.bader.budget.TestUtils.asJsonString;
@@ -316,7 +320,11 @@ class ClosingProcessIT extends AbstractIT {
             givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
-                .param("date", "1638316800000")
+                .param("date",
+                    ZonedDateTime
+                        .of(LocalDate.of(2021, 12, 1), LocalTime.NOON, ZoneId.of("Z"))
+                        .toInstant()
+                        .toEpochMilli())
                 .get("/budget/transaction/list")
                 .then()
                 .statusCode(HttpStatus.SC_OK)
@@ -324,7 +332,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[10].description", equalTo("DO IT + GARDEN MIGROS BER, BERN"))
                 .body("[10].budgetedAmount", equalTo(0))
                 .body("[10].effectiveAmount", equalTo(28.5F))
-                .body("[10].date", equalTo("2021-12-10T12:00:00"))
+                .body("[10].date", equalTo("2021-12-10T12:00:00Z"))
                 .body("[10].debitedAccount.name", equalTo("Lunch Cyrill"))
                 .body("[10].creditedAccount.name", equalTo("Miles & More"))
                 .body("[10].debitedAccount.underlyingAccount.name", equalTo("Prebudget"))
@@ -333,7 +341,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[15].description", equalTo("REINHARD AG, BERN"))
                 .body("[15].budgetedAmount", equalTo(0))
                 .body("[15].effectiveAmount", equalTo(10.8F))
-                .body("[15].date", equalTo("2021-12-10T12:00:00"))
+                .body("[15].date", equalTo("2021-12-10T12:00:00Z"))
                 .body("[15].debitedAccount.name", equalTo("Lunch Cyrill"))
                 .body("[15].creditedAccount.name", equalTo("Miles & More"))
                 .body("[15].debitedAccount.underlyingAccount.name", equalTo("Prebudget"))
@@ -429,7 +437,11 @@ class ClosingProcessIT extends AbstractIT {
             givenWithAuth()
                 .contentType(ContentType.JSON)
                 .when()
-                .param("date", "1638316800000")
+                .param("date",
+                    ZonedDateTime
+                        .of(LocalDate.of(2021, 12, 1), LocalTime.NOON, ZoneId.of("Z"))
+                        .toInstant()
+                        .toEpochMilli())
                 .get("/budget/transaction/list")
                 .then()
                 .statusCode(HttpStatus.SC_OK)
@@ -437,7 +449,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[16].description", equalTo("H & M, BERN"))
                 .body("[16].budgetedAmount", equalTo(0))
                 .body("[16].effectiveAmount", equalTo(30.90F))
-                .body("[16].date", equalTo("2021-12-10T12:00:00"))
+                .body("[16].date", equalTo("2021-12-10T12:00:00Z"))
                 .body("[16].debitedAccount.name", equalTo("Miles & More"))
                 .body("[16].creditedAccount.name", equalTo("General Expenses"))
                 .body("[16].debitedAccount.underlyingAccount.name", equalTo("Credit Cards"))
@@ -445,7 +457,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[17].description", equalTo("H & M, BERN"))
                 .body("[17].budgetedAmount", equalTo(0))
                 .body("[17].effectiveAmount", equalTo(30.90F))
-                .body("[17].date", equalTo("2021-12-10T12:00:00"))
+                .body("[17].date", equalTo("2021-12-10T12:00:00Z"))
                 .body("[17].debitedAccount.name", equalTo("Furniture"))
                 .body("[17].creditedAccount.name", equalTo("Miles & More"))
                 .body("[17].debitedAccount.underlyingAccount.name", equalTo("Variable Costs"))
@@ -453,7 +465,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[21].description", equalTo("WWW.ZALANDO.CH, BERLIN"))
                 .body("[21].budgetedAmount", equalTo(0))
                 .body("[21].effectiveAmount", equalTo(-34.95F))
-                .body("[21].date", equalTo("2021-12-10T12:00:00"))
+                .body("[21].date", equalTo("2021-12-10T12:00:00Z"))
                 .body("[21].debitedAccount.name", equalTo("Furniture"))
                 .body("[21].creditedAccount.name", equalTo("Miles & More"))
                 .body("[21].debitedAccount.underlyingAccount.name", equalTo("Variable Costs"))

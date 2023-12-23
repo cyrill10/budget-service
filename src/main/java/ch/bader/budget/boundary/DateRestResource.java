@@ -8,7 +8,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Path("/budget/date/month/list")
@@ -27,7 +27,7 @@ public class DateRestResource {
     }
 
     @GET
-    public List<LocalDateTime> getAllMonths() {
+    public List<ZonedDateTime> getAllMonths() {
         return monthGenerator.getAllMonths().stream().map(localDateMapper::fromDomain).toList();
     }
 }
