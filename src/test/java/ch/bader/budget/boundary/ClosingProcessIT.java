@@ -445,7 +445,7 @@ class ClosingProcessIT extends AbstractIT {
                 .body("[17].description", equalTo("H & M, BERN"))
                 .body("[17].budgetedAmount", equalTo(0))
                 .body("[17].effectiveAmount", equalTo(30.90F))
-                .body("[17].date", equalTo("2021-12-10"))
+                .body("[17].date", equalTo("2021-12-10T12:00:00"))
                 .body("[17].debitedAccount.name", equalTo("Furniture"))
                 .body("[17].creditedAccount.name", equalTo("Miles & More"))
                 .body("[17].debitedAccount.underlyingAccount.name", equalTo("Variable Costs"))
