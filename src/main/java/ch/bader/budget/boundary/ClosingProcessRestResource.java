@@ -25,6 +25,7 @@ import org.jboss.resteasy.reactive.RestResponse;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -67,7 +68,8 @@ public class ClosingProcessRestResource {
                                                                         @RestForm final Integer month,
                                                                         @RestForm final FileUpload file) throws IOException {
         final YearMonth yearMonth = YearMonth.of(year, month + 1);
-        final List<ScannedTransaction> scannedTransactions = closingProcessService.uploadFile(yearMonth, file);
+        final List<ScannedTransaction> scannedTransactions = closingProcessService.uploadFile(yearMonth,
+            Files.newBufferedReader(file.filePath()));
         if (scannedTransactions != null) {
             return RestResponse.ok(scannedTransactions
                 .stream()
