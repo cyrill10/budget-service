@@ -63,10 +63,9 @@ public class ClosingProcessRestResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public RestResponse<List<ScannedTransactionBoundaryDto>> uploadFile(
-        @RestQuery final Integer year,
-        @RestQuery final Integer month,
-        @RestForm final FileUpload file) throws IOException {
+    public RestResponse<List<ScannedTransactionBoundaryDto>> uploadFile(@RestForm final Integer year,
+                                                                        @RestForm final Integer month,
+                                                                        @RestForm final FileUpload file) throws IOException {
         final YearMonth yearMonth = YearMonth.of(year, month + 1);
         final List<ScannedTransaction> scannedTransactions = closingProcessService.uploadFile(yearMonth, file);
         if (scannedTransactions != null) {
@@ -80,14 +79,14 @@ public class ClosingProcessRestResource {
 
     @GET
     @Path("/transactions")
-    public List<ScannedTransactionBoundaryDto> getTransactions(
-        @RestQuery final Integer year,
-        @RestQuery final Integer month) {
+    public List<ScannedTransactionBoundaryDto> getTransactions(@RestQuery final Integer year,
+                                                               @RestQuery final Integer month) {
         final YearMonth yearMonth = YearMonth.of(year, month + 1);
         return closingProcessService
             .getTransactions(yearMonth)
             .stream()
-            .map(scannedTransactionBoundaryDtoMapper::mapToDto).toList();
+            .map(scannedTransactionBoundaryDtoMapper::mapToDto)
+            .toList();
     }
 
     @POST
