@@ -6,7 +6,7 @@ import ch.bader.budget.adapter.repository.TransactionRepository;
 import ch.bader.budget.adapter.repository.VirtualAccountRepository;
 import ch.bader.budget.boundary.dto.SaveScannedTransactionBoundaryDto;
 import ch.bader.budget.core.balance.AccountBalanceService;
-import ch.bader.budget.core.process.closing.ScannedTransactionCsvBean;
+import ch.bader.budget.core.process.closing.CsvParsingService;
 import ch.bader.budget.domain.Balance;
 import ch.bader.budget.domain.ClosingProcess;
 import ch.bader.budget.domain.RealAccount;
@@ -19,22 +19,18 @@ import ch.bader.budget.type.ClosingProcessStatus;
 import ch.bader.budget.type.PaymentStatus;
 import ch.bader.budget.type.PaymentType;
 import ch.bader.budget.type.TransactionIndication;
-import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.collections4.CollectionUtils;
-import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class ClosingProcessService {
@@ -54,6 +50,9 @@ public class ClosingProcessService {
     @Inject
     AccountBalanceService accountBalanceService;
 
+    @Inject
+    CsvParsingService csvParsingService;
+
     public ClosingProcess getClosingProcess(final YearMonth yearMonth) {
         return closingProcessRepository.getClosingProcessByYearMonth(yearMonth);
     }
@@ -62,19 +61,11 @@ public class ClosingProcessService {
         return closingProcessRepository.closeFileUploadStatus(yearMonth);
     }
 
-    public List<ScannedTransaction> uploadFile(final YearMonth yearMonth, final FileUpload file) throws IOException {
+    public List<ScannedTransaction> uploadFile(final YearMonth yearMonth,
+                                               final BufferedReader reader) throws IOException {
         final ClosingProcess closingProcess = closingProcessRepository.getClosingProcessByYearMonth(yearMonth);
         if (closingProcess.getUploadStatus().equals(ClosingProcessStatus.NEW)) {
-            final BufferedReader reader = Files.newBufferedReader(file.filePath());
-            final List<ScannedTransaction> scannedTransactions = new CsvToBeanBuilder<ScannedTransactionCsvBean>(reader)
-                .withType(ScannedTransactionCsvBean.class)
-                .build()
-                .stream()
-                .filter(stb -> !stb.getDescription().contains("IHRE ZAHLUNG – BESTEN DANK"))
-                .map(stb -> stb.mapTopScannedTransaction(closingProcess))
-                .sorted()
-                .collect(Collectors.toList());
-
+            final List<ScannedTransaction> scannedTransactions = csvParsingService.parseCsvFile(reader, yearMonth);
             closingProcess.setUploadStatus(ClosingProcessStatus.STARTED);
             closingProcessRepository.updateClosingProcess(closingProcess);
             return scannedTransactionRepository.saveAll(scannedTransactions);
