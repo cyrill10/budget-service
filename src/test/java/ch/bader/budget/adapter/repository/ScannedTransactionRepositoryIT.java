@@ -30,24 +30,28 @@ class ScannedTransactionRepositoryIT {
             .builder()
             .yearMonth("2021-01")
             .description("findableDbo")
+            .date("2021-01-02")
             .build();
 
         final ScannedTransactionAdapterDbo alsoFindableDbo = ScannedTransactionAdapterDbo
             .builder()
             .yearMonth("2021-01")
             .description("alsoFindableDbo")
+            .date("2021-01-03")
             .build();
 
         final ScannedTransactionAdapterDbo notFindableDbo = ScannedTransactionAdapterDbo
             .builder()
             .yearMonth("2021-02")
             .description("notFindableDbo")
+            .date("2021-01-02")
             .build();
 
         final ScannedTransactionAdapterDbo alsoNotFindableDbo = ScannedTransactionAdapterDbo
             .builder()
             .yearMonth("2022-01")
             .description("alsoNotFindableDbo")
+            .date("2021-01-03")
             .build();
 
         sut.persist(List.of(findableDbo, notFindableDbo, alsoNotFindableDbo, alsoFindableDbo));
