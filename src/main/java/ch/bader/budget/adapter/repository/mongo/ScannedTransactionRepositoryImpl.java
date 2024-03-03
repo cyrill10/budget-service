@@ -29,6 +29,7 @@ public class ScannedTransactionRepositoryImpl implements ScannedTransactionRepos
         return list("yearMonth", yearMonth.toString())
             .stream()
             .map(scannedTransactionAdapterDboMapper::mapToDomain)
+            .sorted()
             .toList();
     }
 
