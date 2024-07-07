@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'
-        java-version: '18'
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '18'
 
-    - name: Build with Maven
-      run: mvn clean install -DskipITs=false
+      - name: Build with Maven
+        run: mvn clean install -DskipITs=false
