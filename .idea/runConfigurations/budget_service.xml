@@ -7,7 +7,7 @@
         <option name="myRunnerSettings" />
         <option name="myRunnerParameters">
           <MavenRunnerParameters>
-            <option name="cmdOptions" value="" />
+            <option name="cmdOptions" value="-Dquarkus.profile=local" />
             <option name="profiles">
               <set />
             </option>

@@ -21,9 +21,7 @@ jobs:
 
       - name: Update Version and Build Native Quarkus App
         run: |
-          new_version=$(date +"%Y%m%d%H%M%S")
-          mvn versions:set -DnewVersion=$new_version
-
+          mvn versions:set -DnewVersion=${{ github.run_number }}
       - name: Add properties to file
         run: |
           echo "budget.startdate=${{ vars.BUDGET_STARTDATE }}" >> src/main/resources/application.properties
