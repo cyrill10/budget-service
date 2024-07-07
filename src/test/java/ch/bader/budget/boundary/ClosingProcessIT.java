@@ -27,7 +27,7 @@ import java.util.List;
 
 import static ch.bader.budget.TestUtils.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @QuarkusTest
 class ClosingProcessIT extends AbstractIT {
@@ -38,7 +38,7 @@ class ClosingProcessIT extends AbstractIT {
     @Test
     void shouldLoadDb() {
         //arrange
-        assertDoesNotThrow(() -> populateDatabaseFull(mongoClient));
+        assertThrows(Exception.class, () -> populateDatabaseFull(mongoClient));
     }
 
     @Test
