@@ -47,7 +47,6 @@ public class RealAccountRestResource {
     @POST
     @ResponseStatus(201)
     @Path("/add")
-
     public RealAccountBoundaryDto addNewAccount(final RealAccountBoundaryDto accountDto) {
         RealAccount account = realAccountBoundaryDtoMapper.mapToDomain(accountDto);
         account = realAccountService.addRealAccount(account);
@@ -65,12 +64,12 @@ public class RealAccountRestResource {
     @Path("/list")
     public List<AccountElementBoundaryDto> getAllAccounts() {
         final Map<RealAccount, List<VirtualAccount>> map = virtualAccountService.getAccountMap();
-        return map.entrySet()
-                  .stream()
-                  .map(entry -> new AccountElementBoundaryDto(realAccountBoundaryDtoMapper.mapToDto(entry.getKey()),
-                      entry.getValue().stream().map(virtualAccountBoundaryDtoMapper::mapToDto)
-                           .toList()))
-                  .toList();
+        return map
+            .entrySet()
+            .stream()
+            .map(entry -> new AccountElementBoundaryDto(realAccountBoundaryDtoMapper.mapToDto(entry.getKey()),
+                entry.getValue().stream().map(virtualAccountBoundaryDtoMapper::mapToDto).toList()))
+            .toList();
     }
 
 
