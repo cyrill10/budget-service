@@ -9,7 +9,7 @@ import ch.bader.budget.boundary.dto.mapper.AccountStatisticsRequestBoundaryDtoMa
 import ch.bader.budget.boundary.dto.mapper.InsightsBoundaryDtoMapper;
 import ch.bader.budget.boundary.dto.mapper.InsightsRequestBoundaryDtoMapper;
 import ch.bader.budget.core.service.AccountStatisticsService;
-import ch.bader.budget.core.service.InsightService;
+import ch.bader.budget.core.service.insights.CalculateInsightsService;
 import ch.bader.budget.domain.statistics.AccountStatistics;
 import ch.bader.budget.domain.statistics.AccountStatisticsRequest;
 import ch.bader.budget.domain.statistics.Insights;
@@ -41,7 +41,7 @@ public class InsightsRestResource {
     AccountStatisticsService accountStatisticsService;
 
     @Inject
-    InsightService insightService;
+    CalculateInsightsService calculateInsightsService;
 
     @GET
     @Path("/account")
@@ -56,7 +56,7 @@ public class InsightsRestResource {
     public InsightsBoundaryDto getInsights(final InsightsRequestBoundaryDto insightsRequestBoundaryDto) {
         final InsightsRequest insightsRequest = insightsRequestBoundaryDtoMapper.mapFromBoundaryDto(
             insightsRequestBoundaryDto);
-        final Insights result = insightService.getInsights(insightsRequest);
+        final Insights result = calculateInsightsService.getInsights(insightsRequest);
         return insightsBoundaryDtoMapper.mapToBoundaryDto(result);
     }
 }
