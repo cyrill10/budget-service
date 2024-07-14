@@ -20,7 +20,7 @@ public class RealAccount extends Account implements Comparable<RealAccount> {
 
     @Override
     public int compareTo(final RealAccount o) {
-        final int compareType = getAccountType().getValue().compareTo(o.getAccountType().getValue());
+        final int compareType = getAccountType().compareTo(o.getAccountType());
         if (compareType == 0) {
             return getName().compareTo(o.getName());
         }
@@ -30,6 +30,11 @@ public class RealAccount extends Account implements Comparable<RealAccount> {
     @Override
     public boolean isAlienAccount() {
         return getAccountType().isAlienAccount();
+    }
+
+    @Override
+    public boolean isForeignCurrencyAccount() {
+        return AccountType.FOREIGN_CURRENCY.equals(getAccountType());
     }
 
     @Override

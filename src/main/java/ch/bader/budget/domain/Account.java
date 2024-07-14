@@ -9,6 +9,8 @@ public abstract class Account {
 
     public abstract boolean isAlienAccount();
 
+    public abstract boolean isForeignCurrencyAccount();
+
     public abstract boolean isRelevantForTransaction(Transaction transaction);
 
     public abstract boolean isDebitedAccount(final Transaction transaction);
