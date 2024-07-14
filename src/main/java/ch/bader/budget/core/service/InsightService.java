@@ -24,8 +24,8 @@ public class InsightService {
         final List<YearMonth> relevantMonths = getRelevantMonths(insightsRequest);
         return switch (insightsRequest.getInsightType()) {
             case INCOME -> incomeInsightService.getIncomeInsights(insightsRequest, relevantMonths);
-            case SPENDING -> spendingInsightService.getSpendingsInsights(insightsRequest, relevantMonths);
-            case SAVING -> null;
+            case SPENDINGS -> spendingInsightService.getSpendingsInsights(insightsRequest, relevantMonths);
+            case SAVINGS -> null;
         };
     }
 
