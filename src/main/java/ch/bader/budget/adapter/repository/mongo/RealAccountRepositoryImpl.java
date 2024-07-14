@@ -4,6 +4,7 @@ import ch.bader.budget.adapter.entity.RealAccountAdapterDbo;
 import ch.bader.budget.adapter.entity.mapper.RealAccountAdapterDboMapper;
 import ch.bader.budget.adapter.repository.RealAccountRepository;
 import ch.bader.budget.domain.RealAccount;
+import ch.bader.budget.type.AccountType;
 import io.quarkus.mongodb.panache.PanacheMongoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -16,7 +17,6 @@ public class RealAccountRepositoryImpl implements RealAccountRepository, Panache
 
     @Inject
     RealAccountAdapterDboMapper realAccountAdapterDboMapper;
-
 
     @Override
     public RealAccount getAccountById(final String id) {
@@ -40,5 +40,13 @@ public class RealAccountRepositoryImpl implements RealAccountRepository, Panache
         final RealAccountAdapterDbo dbo = realAccountAdapterDboMapper.mapToDbo(account);
         update(dbo);
         return realAccountAdapterDboMapper.mapToDomain(dbo);
+    }
+
+    @Override
+    public List<RealAccount> getAllByAccountType(final List<AccountType> accountTypes) {
+        return streamAll()
+            .map(realAccountAdapterDboMapper::mapToDomain)
+            .filter(realAccount -> accountTypes.contains(realAccount.getAccountType()))
+            .toList();
     }
 }

@@ -107,6 +107,14 @@ public class TransactionRepositoryImpl implements TransactionRepository, Panache
     }
 
     @Override
+    public List<Transaction> getAllTransactionsForMonthAndVirtualAccounts(final YearMonth month,
+                                                                          final List<VirtualAccount> virtualAccounts) {
+        return findAllByDateBetweenAndVirtualAccountId(month.minusMonths(1).atEndOfMonth(),
+            month.plusMonths(1).atDay(1),
+            virtualAccounts.stream().map(VirtualAccount::getId).toList());
+    }
+
+    @Override
     public List<Transaction> getAllTransactionsForVirtualAccountsUntilDate(final List<VirtualAccount> virtualAccounts,
                                                                            final LocalDate unitlExclusive) {
         return findAllByDateBetweenAndVirtualAccountId(monthGenerator.getStartDate().minusDays(1),

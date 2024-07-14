@@ -21,5 +21,8 @@ public interface VirtualAccountRepository {
     Map<RealAccount, List<VirtualAccount>> getAccountMap();
 
     List<VirtualAccount> getAccountsByRealAccount(RealAccount realAccount);
+
+    List<VirtualAccount> getAccountsByRealAccounts(List<RealAccount> realAccounts);
+    
 }
 

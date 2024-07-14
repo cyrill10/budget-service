@@ -64,6 +64,11 @@ public class TransactionService {
         return transactionRepository.getAllTransactionsForMonth(month);
     }
 
+    public List<Transaction> getAllTransactionsForMonthAndVirtualAccounts(final YearMonth month,
+                                                                          final List<VirtualAccount> virtualAccounts) {
+        return transactionRepository.getAllTransactionsForMonthAndVirtualAccounts(month, virtualAccounts);
+    }
+
     public List<TransactionListElement> getAllTransactionsForMonthAndVirtualAccount(final LocalDate date,
                                                                                     final String accountId) {
         final VirtualAccount virtualAccount = virtualAccountRepository.getAccountById(accountId);
