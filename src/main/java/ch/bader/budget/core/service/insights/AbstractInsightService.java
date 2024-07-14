@@ -37,6 +37,8 @@ public abstract class AbstractInsightService {
             .map(yearMonth -> transactionService.getAllTransactionsForMonthAndVirtualAccounts(yearMonth,
                 spendingVirtualAccount))
             .flatMap(Collection::stream)
+            .filter(t -> t.getDebitedAccount().isForeignCurrencyAccount())
+            .filter(t -> t.getCreditedAccount().isForeignCurrencyAccount())
             .toList();
     }
 

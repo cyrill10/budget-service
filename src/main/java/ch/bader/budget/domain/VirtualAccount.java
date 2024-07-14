@@ -29,6 +29,11 @@ public class VirtualAccount extends Account implements Comparable<VirtualAccount
     }
 
     @Override
+    public boolean isForeignCurrencyAccount() {
+        return getUnderlyingAccount().isForeignCurrencyAccount();
+    }
+
+    @Override
     public boolean isRelevantForTransaction(final Transaction transaction) {
         return this.equals(transaction.getCreditedAccount()) || this.equals(transaction.getDebitedAccount());
     }

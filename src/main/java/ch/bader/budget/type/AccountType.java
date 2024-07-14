@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public enum AccountType implements ValueEnum<Integer> {
 
-    CHECKING(1, "Checking"), SAVING(2, "Saving"), CREDIT(3, "Credit"), ALIEN(4, "Alien"), PREBUDGETED(5,
-        "Prebudgeted"), FOREIGN_CURRENCY(6, "Foreign Currency");
+    CHECKING(1, "Checking"), SAVING(2, "Saving"), FOREIGN_CURRENCY(6, "Foreign Currency"), CREDIT(3, "Credit"), ALIEN(4,
+        "Alien"), PREBUDGETED(5, "Prebudgeted");
 
-    private static final AccountType[] overviewTypes = {CHECKING, SAVING, CREDIT, PREBUDGETED};
+    private static final AccountType[] overviewTypes = {CHECKING, SAVING, CREDIT, PREBUDGETED, FOREIGN_CURRENCY};
 
     private static final AccountType[] PrebudgetedTypes = {PREBUDGETED};
 
