@@ -12,6 +12,9 @@ public interface PaymentTypeBoundaryDtoMapper {
     }
 
     default PaymentType mapToDomain(final ValueEnumBoundaryDto dto) {
+        if (dto == null) {
+            return PaymentType.DEPOSIT;
+        }
         return PaymentType.forValue(dto.getValue());
     }
 }

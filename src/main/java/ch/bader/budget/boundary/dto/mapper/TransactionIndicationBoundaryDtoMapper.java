@@ -12,6 +12,9 @@ public interface TransactionIndicationBoundaryDtoMapper {
     }
 
     default TransactionIndication mapToDomain(final ValueEnumBoundaryDto dto) {
+        if (dto == null) {
+            return TransactionIndication.EXPECTED;
+        }
         return TransactionIndication.forValue(dto.getValue());
     }
 }
