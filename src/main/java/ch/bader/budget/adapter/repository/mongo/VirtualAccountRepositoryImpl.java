@@ -11,6 +11,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +99,17 @@ public class VirtualAccountRepositoryImpl implements VirtualAccountRepository, P
             virtualAccount.setUnderlyingAccount(realAccount);
             return virtualAccount;
         }).toList();
+    }
+
+    @Override
+    public List<VirtualAccount> getAccountsByRealAccounts(final List<RealAccount> realAccounts) {
+        return getAccountMap()
+            .entrySet()
+            .stream()
+            .filter(entry -> realAccounts.contains(entry.getKey()))
+            .map(Map.Entry::getValue)
+            .flatMap(Collection::stream)
+            .toList();
     }
 
     private VirtualAccount addRealAccountToVirtualAccount(final VirtualAccount virtualAccount,

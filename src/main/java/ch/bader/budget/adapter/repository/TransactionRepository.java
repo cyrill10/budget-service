@@ -26,6 +26,9 @@ public interface TransactionRepository {
 
     List<Transaction> getAllTransactionsForMonth(YearMonth month);
 
+    List<Transaction> getAllTransactionsForMonthAndVirtualAccounts(YearMonth month,
+                                                                   List<VirtualAccount> virtualAccounts);
+
     List<Transaction> getAllTransactionsForVirtualAccountsUntilDate(List<VirtualAccount> virtualAccounts,
                                                                     LocalDate unitlExclusive);
 
