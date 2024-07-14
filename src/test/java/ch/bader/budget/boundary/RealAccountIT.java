@@ -140,13 +140,14 @@ class RealAccountIT extends AbstractIT {
             .body("[0].value", equalTo(1))
             .body("[1].name", equalTo("Saving"))
             .body("[1].value", equalTo(2))
-            .body("[2].name", equalTo("Credit"))
-            .body("[2].value", equalTo(3))
-            .body("[3].name", equalTo("Alien"))
-            .body("[3].value", equalTo(4))
-            .body("[4].name", equalTo("Prebudgeted"))
-            .body("[4].value", equalTo(5))
-            .body("[5].name", equalTo("Foreign Currency"))
-            .body("[5].value", equalTo(6));
+            .body("[2].name", equalTo("Foreign Currency"))
+            .body("[2].value", equalTo(6))
+            .body("[3].name", equalTo("Credit"))
+            .body("[3].value", equalTo(3))
+            .body("[4].name", equalTo("Alien"))
+            .body("[4].value", equalTo(4))
+            .body("[5].name", equalTo("Prebudgeted"))
+            .body("[5].value", equalTo(5));
+
     }
 }
