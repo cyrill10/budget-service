@@ -11,9 +11,16 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InsightElement {
+public class InsightElement implements Comparable<InsightElement> {
 
     String name;
     BigDecimal amount;
 
+    @Override
+    public int compareTo(final InsightElement o) {
+        if (amount.equals(o.amount)) {
+            return name.compareTo(o.name);
+        }
+        return o.amount.compareTo(amount);
+    }
 }

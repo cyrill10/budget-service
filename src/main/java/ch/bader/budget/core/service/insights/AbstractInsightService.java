@@ -53,6 +53,7 @@ public abstract class AbstractInsightService {
                     .map(Transaction::getEffectiveAmount)
                     .reduce(BigDecimal.ZERO, BigDecimal::add))
                 .build())
+            .sorted()
             .toList();
     }
 
