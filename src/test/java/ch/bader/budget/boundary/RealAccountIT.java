@@ -135,7 +135,7 @@ class RealAccountIT extends AbstractIT {
             .get("/budget/realAccount/type/list")
             .then()
             .statusCode(HttpStatus.SC_OK)
-            .body("$.size()", equalTo(5))
+            .body("$.size()", equalTo(6))
             .body("[0].name", equalTo("Checking"))
             .body("[0].value", equalTo(1))
             .body("[1].name", equalTo("Saving"))
@@ -145,6 +145,8 @@ class RealAccountIT extends AbstractIT {
             .body("[3].name", equalTo("Alien"))
             .body("[3].value", equalTo(4))
             .body("[4].name", equalTo("Prebudgeted"))
-            .body("[4].value", equalTo(5));
+            .body("[4].value", equalTo(5))
+            .body("[5].name", equalTo("Foreign Currency"))
+            .body("[5].value", equalTo(6));
     }
 }

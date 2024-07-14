@@ -15,7 +15,6 @@ import ch.bader.budget.domain.statistics.AccountStatisticsRequest;
 import ch.bader.budget.domain.statistics.Insights;
 import ch.bader.budget.domain.statistics.InsightsRequest;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -43,7 +42,7 @@ public class InsightsRestResource {
     @Inject
     CalculateInsightsService calculateInsightsService;
 
-    @GET
+    @POST
     @Path("/account")
     public AccountStatisticsBoundaryDto getAccountStatistics(final AccountStatisticsRequestBoundaryDto accountStatisticsRequestBoundaryDto) {
         final AccountStatisticsRequest accountStatisticsRequest = accountStatisticsRequestBoundaryDtoMapper.mapFromBoundaryDto(

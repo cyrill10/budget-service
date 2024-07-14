@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public enum AccountType implements ValueEnum<Integer> {
 
-    CHECKING(1, "Checking"), SAVING(2, "Saving"), CREDIT(3, "Credit"), ALIEN(4, "Alien"),
-    PREBUDGETED(5, "Prebudgeted");
+    CHECKING(1, "Checking"), SAVING(2, "Saving"), CREDIT(3, "Credit"), ALIEN(4, "Alien"), PREBUDGETED(5,
+        "Prebudgeted"), FOREIGN_CURRENCY(6, "Foreign Currency");
 
     private static final AccountType[] overviewTypes = {CHECKING, SAVING, CREDIT, PREBUDGETED};
 
@@ -17,7 +17,7 @@ public enum AccountType implements ValueEnum<Integer> {
 
     private final String name;
 
-    AccountType(int value, String name) {
+    AccountType(final int value, final String name) {
         this.value = value;
         this.name = name;
     }
@@ -32,7 +32,7 @@ public enum AccountType implements ValueEnum<Integer> {
         return name;
     }
 
-    public static AccountType forValue(Integer value) {
+    public static AccountType forValue(final Integer value) {
         return Arrays.stream(AccountType.values()).filter(p -> p.getValue().equals(value)).findFirst().orElseThrow();
     }
 
